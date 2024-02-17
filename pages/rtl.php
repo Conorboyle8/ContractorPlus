@@ -1,17 +1,3 @@
-<!--
-=========================================================
-* Material Dashboard 2 - v3.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -21,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Material Dashboard 2 by Creative Tim
+    ContractorPlus
   </title>
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -45,7 +31,7 @@
       <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute start-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
         <img src="../assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="me-1 font-weight-bold text-white">Material Dashboard 2</span>
+        <span class="me-1 font-weight-bold text-white">ContractorPlus</span>
       </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
@@ -73,14 +59,6 @@
               <i class="material-icons-round opacity-10">receipt_long</i>
             </div>
             <span class="nav-link-text me-1">الفواتير</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="../pages/virtual-reality.html">
-            <div class="text-white text-center ms-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons-round opacity-10">view_in_ar</i>
-            </div>
-            <span class="nav-link-text me-1">الواقع الافتراضي</span>
           </a>
         </li>
         <li class="nav-item">
