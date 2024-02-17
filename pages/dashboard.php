@@ -1,4 +1,6 @@
 <?php
+require_once('../assets/includes/classes/Database.php');
+$database = new Database();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,14 +66,6 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="../pages/rtl.php">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
-            </div>
-            <span class="nav-link-text ms-1">RTL</span>
-          </a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link text-white " href="../pages/notifications.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">notifications</i>
@@ -134,9 +128,6 @@
             </div>
           </div>
           <ul class="navbar-nav  justify-content-end">
-            <li class="nav-item d-flex align-items-center">
-              <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank" href="https://www.creative-tim.com/builder?ref=navbar-material-dashboard">Online Builder</a>
-            </li>
             <li class="mt-2">
               <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star creativetimofficial/material-dashboard on GitHub">Star</a>
             </li>
@@ -248,7 +239,7 @@
               </div>
               <div class="text-end pt-1">
                 <p class="text-sm mb-0 text-capitalize">Revenue</p>
-                <h4 class="mb-0">$53k</h4>
+                <h4 class="mb-0">$18.8k</h4>
               </div>
             </div>
             <hr class="dark horizontal my-0">
@@ -264,8 +255,8 @@
                 <i class="material-icons opacity-10">person</i>
               </div>
               <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">Today's Users</p>
-                <h4 class="mb-0">2,300</h4>
+                <p class="text-sm mb-0 text-capitalize">Open Jobs</p>
+                <h4 class="mb-0"><?php $numberOfJobs = $database->getNumberOfJobs(); echo $numberOfJobs; ?></h4>
               </div>
             </div>
             <hr class="dark horizontal my-0">
@@ -281,8 +272,8 @@
                 <i class="material-icons opacity-10">person</i>
               </div>
               <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">New Clients</p>
-                <h4 class="mb-0">3,462</h4>
+                <p class="text-sm mb-0 text-capitalize">Jobs Completed</p>
+                <h4 class="mb-0">324</h4>
               </div>
             </div>
             <hr class="dark horizontal my-0">
@@ -298,8 +289,8 @@
                 <i class="material-icons opacity-10">weekend</i>
               </div>
               <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">Sales</p>
-                <h4 class="mb-0">$103,430</h4>
+                <p class="text-sm mb-0 text-capitalize">Customer Approval</p>
+                <h4 class="mb-0">90%</h4>
               </div>
             </div>
             <hr class="dark horizontal my-0">

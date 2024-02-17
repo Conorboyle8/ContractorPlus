@@ -141,19 +141,6 @@
   </a>
 </li>
 
-  
-<li class="nav-item">
-  <a class="nav-link text-white " href="./rtl.html">
-    
-      <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-        <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
-      </div>
-    
-    <span class="nav-link-text ms-1">RTL</span>
-  </a>
-</li>
-
-  
 <li class="nav-item">
   <a class="nav-link text-white " href="./notifications.html">
     
@@ -248,9 +235,6 @@
           
       </div>
       <ul class="navbar-nav  justify-content-end">
-        <li class="nav-item d-flex align-items-center">
-          <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank" href="https://www.creative-tim.com/builder?ref=navbar-material-dashboard">Online Builder</a>
-        </li>
         <li class="mt-2">
           <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star creativetimofficial/material-dashboard on GitHub">Star</a>
         </li>
