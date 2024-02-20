@@ -2,6 +2,7 @@
 require_once('../assets/includes/classes/Database.php');
 $database = new Database();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
