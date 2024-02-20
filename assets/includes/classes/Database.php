@@ -38,6 +38,34 @@ class Database {
         }
     }
 
+    public function getAllJobs() {
+        $query = "SELECT * FROM Jobs ORDER BY CASE WHEN status = 'Active' THEN 1 WHEN status = 'Pending' THEN 2 WHEN status = 'Closed' THEN 3 ELSE 4 END";
+        $result = $this->conn->query($query);
+    
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    public function pdoNumQuery($table, $condition = '', $params = []) {
+
+        $sql = "SELECT COUNT(*) FROM $table" . ($condition ? " WHERE $condition" : "");
+        return $this->executeQuery($sql, $params)->fetchColumn();
+
+    }
+
+    public function addNewJob($clientName, $jobName, $address, $phoneNumber, $jobSize, $status) {
+        $query = "INSERT INTO Jobs (ClientName, JobName, Address, PhoneNumber, JobSize, Status) 
+                  VALUES ('$clientName', '$jobName', '$address', '$phoneNumber', '$jobSize', '$status')";
+
+        $result = $this->conn->query($query);
+
+        return $result;
+    }
+    
+
     // Close the database connection
     public function close() {
         $this->conn->close();
