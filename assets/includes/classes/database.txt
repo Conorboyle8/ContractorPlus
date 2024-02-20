@@ -1,0 +1,214 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Feb 21, 2024 at 12:16 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `cm`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clients`
+--
+
+CREATE TABLE `clients` (
+  `ClientID` int(11) NOT NULL,
+  `ClientName` varchar(255) NOT NULL,
+  `ContactPerson` varchar(255) DEFAULT NULL,
+  `Email` varchar(255) DEFAULT NULL,
+  `Phone` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `clients`
+--
+
+INSERT INTO `clients` (`ClientID`, `ClientName`, `ContactPerson`, `Email`, `Phone`) VALUES
+(1, 'Client A', NULL, 'clientA@example.com', '555-1111'),
+(2, 'Client B', NULL, 'clientB@example.com', '555-2222'),
+(3, 'Client C', NULL, 'clientC@example.com', '555-3333');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoiceitems`
+--
+
+CREATE TABLE `invoiceitems` (
+  `ItemID` int(11) NOT NULL,
+  `InvoiceID` int(11) DEFAULT NULL,
+  `Description` text DEFAULT NULL,
+  `Quantity` int(11) DEFAULT NULL,
+  `Price` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoices`
+--
+
+CREATE TABLE `invoices` (
+  `InvoiceID` int(11) NOT NULL,
+  `JobID` int(11) DEFAULT NULL,
+  `Amount` decimal(10,2) NOT NULL,
+  `InvoiceDate` date DEFAULT NULL,
+  `DueDate` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jobs`
+--
+
+CREATE TABLE `jobs` (
+  `JobID` int(11) NOT NULL,
+  `ClientID` int(11) DEFAULT NULL,
+  `JobName` varchar(255) NOT NULL,
+  `Address` varchar(255) DEFAULT NULL,
+  `PhoneNumber` varchar(20) DEFAULT NULL,
+  `JobSize` varchar(50) DEFAULT NULL,
+  `Status` enum('Active','Pending','Closed') DEFAULT 'Active',
+  `ClientName` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `jobs`
+--
+
+INSERT INTO `jobs` (`JobID`, `ClientID`, `JobName`, `Address`, `PhoneNumber`, `JobSize`, `Status`, `ClientName`) VALUES
+(6, 1, 'Website Redesign', '123 Main St', '555-1234', 'Large', 'Active', 'Client A'),
+(7, 2, 'Mobile App Development', '456 Oak St', '555-5678', 'Medium', 'Pending', 'Client B'),
+(8, 3, 'Office Renovation', '789 Pine St', '555-9876', 'Small', 'Closed', 'Client C'),
+(9, 1, 'Database Optimization', '101 Elm St', '555-4321', 'Extra Large', 'Active', 'Client A'),
+(10, 2, 'Marketing Campaign', '202 Maple St', '555-8765', 'Medium', 'Pending', 'Client B'),
+(11, NULL, 'cider', 'e223', '3423423', 'small', 'Active', 'bob'),
+(12, NULL, 'c', 'e223', '3423423', '3422', 'Active', 'conor');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `UserID` int(11) NOT NULL,
+  `Username` varchar(50) NOT NULL,
+  `Password` varchar(255) NOT NULL,
+  `UserRole` enum('Admin','User') DEFAULT 'User'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `clients`
+--
+ALTER TABLE `clients`
+  ADD PRIMARY KEY (`ClientID`);
+
+--
+-- Indexes for table `invoiceitems`
+--
+ALTER TABLE `invoiceitems`
+  ADD PRIMARY KEY (`ItemID`),
+  ADD KEY `InvoiceID` (`InvoiceID`);
+
+--
+-- Indexes for table `invoices`
+--
+ALTER TABLE `invoices`
+  ADD PRIMARY KEY (`InvoiceID`),
+  ADD KEY `JobID` (`JobID`);
+
+--
+-- Indexes for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD PRIMARY KEY (`JobID`),
+  ADD KEY `ClientID` (`ClientID`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`UserID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `clients`
+--
+ALTER TABLE `clients`
+  MODIFY `ClientID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `invoiceitems`
+--
+ALTER TABLE `invoiceitems`
+  MODIFY `ItemID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `invoices`
+--
+ALTER TABLE `invoices`
+  MODIFY `InvoiceID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `jobs`
+--
+ALTER TABLE `jobs`
+  MODIFY `JobID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `invoiceitems`
+--
+ALTER TABLE `invoiceitems`
+  ADD CONSTRAINT `invoiceitems_ibfk_1` FOREIGN KEY (`InvoiceID`) REFERENCES `invoices` (`InvoiceID`);
+
+--
+-- Constraints for table `invoices`
+--
+ALTER TABLE `invoices`
+  ADD CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`JobID`) REFERENCES `jobs` (`JobID`);
+
+--
+-- Constraints for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD CONSTRAINT `jobs_ibfk_1` FOREIGN KEY (`ClientID`) REFERENCES `clients` (`ClientID`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
