@@ -39,7 +39,18 @@ class Database {
     }
 
     public function getAllJobs() {
-        $query = "SELECT * FROM Jobs ORDER BY CASE WHEN status = 'Active' THEN 1 WHEN status = 'Pending' THEN 2 WHEN status = 'Closed' THEN 3 ELSE 4 END";
+        $query = "SELECT * FROM Jobs ORDER BY CASE WHEN status = 'Active' THEN 1 WHEN status = 'Pending Payment' THEN 2 WHEN status = 'Paid' THEN 3 ELSE 4 END";
+        $result = $this->conn->query($query);
+    
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    public function getAllClients() {
+        $query = "SELECT * FROM Clients ORDER BY ClientName";
         $result = $this->conn->query($query);
     
         if ($result) {
@@ -56,9 +67,18 @@ class Database {
 
     }
 
-    public function addNewJob($clientName, $jobName, $address, $phoneNumber, $jobSize, $status) {
-        $query = "INSERT INTO Jobs (ClientName, JobName, Address, PhoneNumber, JobSize, Status) 
-                  VALUES ('$clientName', '$jobName', '$address', '$phoneNumber', '$jobSize', '$status')";
+    public function addNewJob($clientName, $jobName, $address, $phoneNumber, $sqft, $status) {
+        $query = "INSERT INTO Jobs (ClientName, JobName, Address, PhoneNumber, SQFT, Status) 
+                  VALUES ('$clientName', '$jobName', '$address', '$phoneNumber', '$sqft', '$status')";
+
+        $result = $this->conn->query($query);
+
+        return $result;
+    }
+
+    public function addNewClient($clientName, $contactPerson, $email, $phoneNumber, $address) {
+        $query = "INSERT INTO Clients (ClientName, ContactPerson, Email, Phone, Address)
+                  VALUES ('$clientName', '$contactPerson', '$email', '$phoneNumber', '$address')";
 
         $result = $this->conn->query($query);
 

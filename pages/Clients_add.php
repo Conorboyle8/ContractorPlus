@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add New Job</title>
+    <title>Add New Client</title>
 </head>
 <body>
 
@@ -16,24 +16,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $database = new Database();
     
     $clientName = $_POST['clientName']; // Update with your actual form field names
-    $jobName = $_POST['jobName'];
-    $address = $_POST['address'];
+    $contactPerson = $_POST['contactPerson'];
+    $email = $_POST['email'];
     $phoneNumber = $_POST['phoneNumber'];
-    $sqft= $_POST['sqft'];
-    $status = $_POST['status'];
+    $address= $_POST['address'];
 
-    $success = $database->addNewJob($clientName, $jobName, $address, $phoneNumber, $sqft, $status);
+    $success = $database->addNewclient($clientName, $contactPerson, $email, $phoneNumber, $address);
 
     if ($success) {
-        echo "Job added successfully!";
+        echo "Client added successfully!";
     } else {
-        echo "Error adding job.";
+        echo "Error adding client.";
     }
 }
 ?>
 
 <div class="container-fluid py-4">
-        <h4>Add New Job</h4>
+        <h4>Add New Client</h4>
         <!-- Add your form here -->
         <form method="post" action="">
             <!-- Add your form fields here -->
@@ -43,13 +42,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div>
-                <label for="jobName">Job Name:</label>
-                <input type="text" name="jobName" required>
+                <label for="contactPerson">Contact Person:</label>
+                <input type="text" name="contactPerson" required>
             </div>
 
             <div>
-                <label for="address">Address:</label>
-                <input type="text" name="address" required>
+                <label for="email">Email:</label>
+                <input type="text" name="email" required>
             </div>
 
             <div>
@@ -58,17 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div>
-                <label for="sqft">SQFT:</label>
-                <input type="text" name="sqft" required>
-            </div>
-
-            <div>
-                <label for="status">Status:</label>
-                <select name="status" required>
-                    <option value="Active">Active</option>
-                    <option value="Pending Payment">Pending Payment</option>
-                    <option value="Paid">Paid</option>
-                </select>
+                <label for="address">Address:</label>
+                <input type="text" name="address" required>
             </div>
 
             <div>

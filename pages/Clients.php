@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>MyJobs</title>
+    <title>Client</title>
 </head>
 
 <body>
@@ -47,34 +47,30 @@
                 <div class="card my-4">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                         <div class="bg-gradient-primary shadow-primary border-radius-lg pt-3 pb-2 d-flex align-items-center">
-                            <h6 class="text-white text-capitalize ps-3 me-2" style="font-size: 18px;">Projects</h6>
+                            <h6 class="text-white text-capitalize ps-3 me-2" style="font-size: 18px;">Clients</h6>
                             <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addJobModal" style="font-size: 14px;">Add</button>
                         </div>
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">Client Name</th>
-                                    <th scope="col">Job Name</th>
-                                    <th scope="col">Address</th>
+                                    <th scope="col">Contact Person</th>
+                                    <th scope="col">Email</th>
                                     <th scope="col">Phone Number</th>
-                                    <th scope="col">SQFT</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Actions</th>
+                                    <th scope="col">Address</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 // Use PHP to fetch and display job data from the database
-                                $result = $database->getAllJobs(); // Replace with your actual method to fetch jobs
+                                $result = $database->getAllClients(); // Replace with your actual method to fetch jobs
                                 while ($row = $result->fetch_assoc()) {
                                     echo "<tr>";
                                     echo "<td>" . (isset($row['ClientName']) ? $row['ClientName'] : 'N/A') . "</td>";
-                                    echo "<td>" . (isset($row['JobName']) ? $row['JobName'] : 'N/A') . "</td>";
+                                    echo "<td>" . (isset($row['ContactPerson']) ? $row['ContactPerson'] : 'N/A') . "</td>";
+                                    echo "<td>" . (isset($row['Email']) ? $row['Email'] : 'N/A') . "</td>";
+                                    echo "<td>" . (isset($row['Phone']) ? $row['Phone'] : 'N/A') . "</td>";
                                     echo "<td>" . (isset($row['Address']) ? $row['Address'] : 'N/A') . "</td>";
-                                    echo "<td>" . (isset($row['PhoneNumber']) ? $row['PhoneNumber'] : 'N/A') . "</td>";
-                                    echo "<td>" . (isset($row['SQFT']) ? $row['SQFT'] : 'N/A') . "</td>";
-                                    echo "<td>" . (isset($row['Status']) ? $row['Status'] : 'N/A') . "</td>";
-                                    echo "<td><button class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#editStatusModal' onclick='openEditStatusModal(\"" . $row['JobID'] . "\")'>Edit</button></td>";
                                     echo "</tr>";
                                 }
                                 ?>

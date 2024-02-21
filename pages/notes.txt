@@ -1,0 +1,12 @@
+add milage info for job
+
+ sqft
+ phone
+ address = + miles to job       
+ Name
+ Expenses = materail + labor
+ status = active, pending payment, paid
+ how many days worked
+
+ paid = check or check       cash running total
+                            miles 
