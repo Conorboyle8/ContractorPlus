@@ -53,11 +53,15 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Client Name</th>
+                                    <th scope="col">Client</th>
                                     <th scope="col">Job Name</th>
                                     <th scope="col">Address</th>
                                     <th scope="col">Phone Number</th>
+                                    <th scope="col">Distance</th>
                                     <th scope="col">SQFT</th>
+                                    <th scope="col">Expenses</th>
+                                    <th scope="col">Days Worked</th>
+                                    <th scope="col">Payment Method</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Actions</th>
                                 </tr>
@@ -72,7 +76,11 @@
                                     echo "<td>" . (isset($row['JobName']) ? $row['JobName'] : 'N/A') . "</td>";
                                     echo "<td>" . (isset($row['Address']) ? $row['Address'] : 'N/A') . "</td>";
                                     echo "<td>" . (isset($row['PhoneNumber']) ? $row['PhoneNumber'] : 'N/A') . "</td>";
+                                    echo "<td>" . (isset($row['Distance']) ? $row['Distance'] : 'N/A') . "</td>";
                                     echo "<td>" . (isset($row['SQFT']) ? $row['SQFT'] : 'N/A') . "</td>";
+                                    echo "<td>" . (isset($row['Expenses']) ? $row['Expenses'] : 'N/A') . "</td>";
+                                    echo "<td>" . (isset($row['DaysWorked']) ? $row['DaysWorked'] : 'N/A') . "</td>";
+                                    echo "<td>" . (isset($row['PaymentMethod']) ? $row['PaymentMethod'] : 'N/A') . "</td>";
                                     echo "<td>" . (isset($row['Status']) ? $row['Status'] : 'N/A') . "</td>";
                                     echo "<td><button class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#editStatusModal' onclick='openEditStatusModal(\"" . $row['JobID'] . "\")'>Edit</button></td>";
                                     echo "</tr>";
