@@ -48,7 +48,7 @@
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                         <div class="bg-gradient-primary shadow-primary border-radius-lg pt-3 pb-2 d-flex align-items-center">
                             <h6 class="text-white text-capitalize ps-3 me-2" style="font-size: 18px;">Projects</h6>
-                            <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addJobModal" style="font-size: 14px;">Add</button>
+                            <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addJobModal" style="font-size: 14px;" onclick="redirectToMyJobs()">Add</button>
                         </div>
                         <table class="table">
                             <thead>
@@ -57,10 +57,11 @@
                                     <th scope="col">Job Name</th>
                                     <th scope="col">Address</th>
                                     <th scope="col">Phone Number</th>
-                                    <th scope="col">Distance</th>
+                                    <th scope="col">Distance To</th>
                                     <th scope="col">SQFT</th>
                                     <th scope="col">Expenses</th>
                                     <th scope="col">Days Worked</th>
+                                    <th scope="col">Revenue</th>
                                     <th scope="col">Payment Method</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Actions</th>
@@ -80,6 +81,7 @@
                                     echo "<td>" . (isset($row['SQFT']) ? $row['SQFT'] : 'N/A') . "</td>";
                                     echo "<td>" . (isset($row['Expenses']) ? $row['Expenses'] : 'N/A') . "</td>";
                                     echo "<td>" . (isset($row['DaysWorked']) ? $row['DaysWorked'] : 'N/A') . "</td>";
+                                    echo "<td>" . (isset($row['revenue']) ? $row['revenue'] : 'N/A') . "</td>";
                                     echo "<td>" . (isset($row['PaymentMethod']) ? $row['PaymentMethod'] : 'N/A') . "</td>";
                                     echo "<td>" . (isset($row['Status']) ? $row['Status'] : 'N/A') . "</td>";
                                     echo "<td><button class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#editStatusModal' onclick='openEditStatusModal(\"" . $row['JobID'] . "\")'>Edit</button></td>";
@@ -245,6 +247,12 @@
         // Close the modal
         $('#editStatusModal').modal('hide');
     }
+</script>
+<script>
+  // JavaScript function to handle button click and redirect
+  function redirectToMyJobs() {
+    window.location.href = "../pages/myjobs_add.php";
+  }
 </script>
 </body>
 

@@ -19,10 +19,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $jobName = $_POST['jobName'];
     $address = $_POST['address'];
     $phoneNumber = $_POST['phoneNumber'];
+    $distance = $_POST['distance'];
     $sqft= $_POST['sqft'];
+    $expenses = $_POST['expenses'];
+    $daysWorked = $_POST['daysWorked'];
+    $revenue = $_POST['revenue'];
+    $paymentMethod = $_POST['paymentMethod'];
     $status = $_POST['status'];
 
-    $success = $database->addNewJob($clientName, $jobName, $address, $phoneNumber, $sqft, $status);
+    $success = $database->addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $expenses, $daysWorked, $revenue,$paymentMethod, $status);
 
     if ($success) {
         echo "Job added successfully!";
@@ -58,9 +63,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div>
+                <label for="distance">Distance To:</label>
+                <input type="text" name="distance" required>
+            </div>
+
+            <div>
                 <label for="sqft">SQFT:</label>
                 <input type="text" name="sqft" required>
             </div>
+
+            <div>
+                <label for="expenses">Expenses:</label>
+                <input type="text" name="expenses" required>
+            </div>
+
+            <div>
+                <label for="revenue">Revenue:</label>
+                <input type="text" name="revenue" required>
+            </div>
+
+            <div>
+                <label for="daysWorked">Days Worked:</label>
+                <input type="text" name="daysWorked" required>
+            </div>
+
+            <div>
+                <label for="paymentMethod">Payment Method:</label>
+                <select name="paymentMethod" required>
+                    <option value="Cash">Cash</option>
+                    <option value="Check">Check</option>
+                </select>
+            </div>
+
 
             <div>
                 <label for="status">Status:</label>
