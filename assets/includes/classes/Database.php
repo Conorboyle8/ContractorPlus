@@ -38,6 +38,30 @@ class Database {
         }
     }
 
+    public function getMilesDriven() {
+        $query = "SELECT SUM(Distance * 2 * DaysWorked) AS miles FROM Jobs";
+        $result = $this->conn->query($query);
+
+        if ($result) {
+            $row = $result->fetch_assoc();
+            return $row['miles'];
+        } else {
+            return false;
+        }
+    }
+
+    public function getDaysWorked() {
+        $query = "SELECT SUM(DaysWorked) AS days FROM Jobs";
+        $result = $this->conn->query($query);
+
+        if ($result) {
+            $row = $result->fetch_assoc();
+            return $row['days'];
+        } else {
+            return false;
+        }
+    }
+
     public function getNumberJobsCompleted() {
         $query = "SELECT COUNT(*) AS jobCount FROM Jobs WHERE status = 'Paid'";
         $result = $this->conn->query($query);
@@ -108,7 +132,7 @@ class Database {
         return $result;
     }
     
-    function getCash(){
+    public function getCash(){
         $query = "SELECT SUM(revenue) AS cash FROM Jobs WHERE status = 'Paid'";
         $result = $this->conn->query($query);
         if ($result) {
@@ -119,7 +143,7 @@ class Database {
         }
     }
 
-    function getRevenue(){
+    public function getRevenue(){
         $query = "SELECT SUM(revenue) AS revenue FROM Jobs WHERE status = 'Paid'";
         $result = $this->conn->query($query);
         if ($result) {
@@ -129,6 +153,8 @@ class Database {
             return false;
         }
     }
+
+    
 
     // Close the database connection
     public function close() {

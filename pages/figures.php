@@ -10,41 +10,69 @@ include('NavBar.php');
 require_once('../assets/includes/classes/Database.php');
 $database = new Database();
 ?>
-    <div class="container-fluid py-4">
-            <div class="col-xl-6">
-              <div class="row">
-                <div class="col-md-6 col-6">
-                  <div class="card">
+<div class="container-fluid py-4">
+    <div class="col-xl-6">
+        <div class="row">
+            <!-- Existing card 1 -->
+            <div class="col-md-6 col-6 mb-4">
+                <div class="card">
+                    <!-- Card header and icon -->
                     <div class="card-header mx-4 p-3 text-center">
-                      <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-                        <i class="material-icons opacity-10">account_balance</i>
-                      </div>
+                        <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+                            <i class="material-icons opacity-10">account_balance</i>
+                        </div>
                     </div>
+                    <!-- Card body -->
                     <div class="card-body pt-0 p-3 text-center">
-                      <h6 class="text-center mb-0">Cash</h6>
-                      <span class="text-xs">Cash Recieved</span>
-                      <hr class="horizontal dark my-3">
-                      <h4 class="mb-0"><?php $cash = $database->getCash(); echo $cash; ?></h4>
+                        <h6 class="text-center mb-0">Cash</h6>
+                        <span class="text-xs">Cash Received</span>
+                        <hr class="horizontal dark my-3">
+                        <h4 class="mb-0"><?php $cash = $database->getCash(); echo $cash; ?></h4>
                     </div>
-                  </div>
                 </div>
-                <div class="col-md-6 col-6">
-                  <div class="card">
-                    <div class="card-header mx-4 p-3 text-center">
-                      <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-                        <i class="material-icons opacity-10">account_balance_wallet</i>
-                      </div>
-                    </div>
-                    <div class="card-body pt-0 p-3 text-center">
-                      <h6 class="text-center mb-0">Miles</h6>
-                      <span class="text-xs">Distance Driven</span>
-                      <hr class="horizontal dark my-3">
-                      <h5 class="mb-0">6473</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
+            
+            <!-- Existing card 2 -->
+            <div class="col-md-6 col-6">
+                <div class="card">
+                    <!-- Card header and icon -->
+                    <div class="card-header mx-4 p-3 text-center">
+                        <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+                            <i class="material-icons opacity-10">account_balance_wallet</i>
+                        </div>
+                    </div>
+                    <!-- Card body -->
+                    <div class="card-body pt-0 p-3 text-center">
+                        <h6 class="text-center mb-0">Miles</h6>
+                        <span class="text-xs">Miles Driven</span>
+                        <hr class="horizontal dark my-3">
+                        <h4 class="mb-0"><?php $miles = ($database->getMilesDriven()); echo $miles; ?></h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New card 3 -->
+            <div class="col-md-6 col-6 mb-4">
+                <div class="card">
+                    <!-- Card header and icon -->
+                    <div class="card-header mx-4 p-3 text-center">
+                        <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+                            <i class="material-icons opacity-10">account_balance</i>
+                        </div>
+                    </div>
+                    <!-- Card body -->
+                    <div class="card-body pt-0 p-3 text-center">
+                        <h6 class="text-center mb-0">Labor</h6>
+                        <span class="text-xs">Days Worked</span>
+                        <hr class="horizontal dark my-3">
+                        <h4 class="mb-0"><?php $days = ($database->getDaysWorked()); echo $days; ?></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
       <i class="material-icons py-2">settings</i>
