@@ -6,6 +6,7 @@
     include 'connection.php';
     include 'functions.php';
     $user_data = check_login($conn);
+    $user_id = $user_data['user_id'];
     echo "Welcome " . $user_data['user_name'];
     ?>
 <!DOCTYPE html>
@@ -69,7 +70,7 @@
                             <tbody>
                                 <?php
                                 // Use PHP to fetch and display client data from the database
-                                $result = $database->getAllClients(); // Replace with your actual method to fetch clients
+                                $result = $database->getAllClients($user_id); // Replace with your actual method to fetch clients
                                 while ($row = $result->fetch_assoc()) {
                                     echo "<tr>";
                                     echo "<td>" . (isset($row['ClientName']) ? $row['ClientName'] : 'N/A') . "</td>";

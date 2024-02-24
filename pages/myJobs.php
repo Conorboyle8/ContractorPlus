@@ -7,6 +7,7 @@
     include 'functions.php';
     $user_data = check_login($conn);
     echo "Welcome " . $user_data['user_name'];
+    $user_id = $user_data['user_id'];
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +76,7 @@
                             <tbody>
                                 <?php
                                 // Use PHP to fetch and display job data from the database
-                                $result = $database->getAllJobs(); // Replace with your actual method to fetch jobs
+                                $result = $database->getAllJobsByID($user_id); // Replace with your actual method to fetch jobs
                                 while ($row = $result->fetch_assoc()) {
                                     echo "<tr>";
                                     echo "<td style='font-size: 14px;'>" . (isset($row['ClientName']) ? $row['ClientName'] : 'N/A') . "</td>";

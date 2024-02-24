@@ -6,7 +6,8 @@
     include 'connection.php';
     include 'functions.php';
     $user_data = check_login($conn);
-    echo "Welcome " . $user_data['user_name'];
+    $user_id = $user_data['user_id'];
+    echo "Welcome " . $user_data['user_id'];
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +27,7 @@
               </div>
               <div class="text-end pt-1">
                 <p class="text-sm mb-0 text-capitalize">Revenue</p>
-                <h4 class="mb-0">$<?php $totalRev = $database->getRevenue(); echo $totalRev; ?></h4>
+                <h4 class="mb-0">$<?php $totalRev = $database->getRevenue($user_id); echo $totalRev; ?></h4>
               </div>
             </div>
             <hr class="dark horizontal my-0">
@@ -43,7 +44,7 @@
               </div>
               <div class="text-end pt-1">
                 <p class="text-sm mb-0 text-capitalize">Open Jobs</p>
-                <h4 class="mb-0"><?php $numberOfJobs = $database->getNumberOfJobs(); echo $numberOfJobs; ?></h4>
+                <h4 class="mb-0"><?php $openJobs = $database->getNumberJobsOpen($user_id); echo $openJobs; ?></h4>
               </div>
             </div>
             <hr class="dark horizontal my-0">
@@ -60,7 +61,7 @@
               </div>
               <div class="text-end pt-1">
                 <p class="text-sm mb-0 text-capitalize">Jobs Completed</p>
-                <h4 class="mb-0"><?php $jobsComp = $database->getNumberJobsCompleted(); echo $jobsComp; ?></h4>
+                <h4 class="mb-0"><?php $jobsComp = $database->getNumberJobsCompleted($user_id); echo $jobsComp; ?></h4>
               </div>
             </div>
             <hr class="dark horizontal my-0">
@@ -112,7 +113,7 @@
                             <tbody>
                                 <?php
                                 // Use PHP to fetch and display job data from the database
-                                $result = $database->getAllJobsOpen(); // Replace with your actual method to fetch jobs
+                                $result = $database->getAllJobsOpenByID($user_id); // Replace with your actual method to fetch jobs
                                 while ($row = $result->fetch_assoc()) {
                                     echo "<tr>";
                                     echo "<td>" . (isset($row['ClientName']) ? $row['ClientName'] : 'N/A') . "</td>";

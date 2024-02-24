@@ -24,8 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $phoneNumber = $_POST['phoneNumber'];
     $address= $_POST['address'];
+    $user_id = $user_data['user_id'];
 
-    $success = $database->addNewclient($clientName, $contactPerson, $email, $phoneNumber, $address);
+    $success = $database->addNewclient($clientName, $contactPerson, $email, $phoneNumber, $address, $user_id);
 
     if ($success) {
         echo "Client added successfully!";

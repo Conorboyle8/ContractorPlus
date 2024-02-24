@@ -29,12 +29,6 @@ class Database {
         die;
     }
 
-    public function pdoQuery($table, $condition, $params = []) {
-
-        return $this->executeQuery("SELECT * FROM $table WHERE $condition LIMIT 1", $params)->fetch(PDO::FETCH_ASSOC);
-
-    }
-
     public function getJobByID($jobID) {
         $query = "SELECT * FROM Jobs WHERE JobID = $jobID";
         $result = $this->conn->query($query);
@@ -101,7 +95,6 @@ class Database {
         }
     }
 
-    // Execute a query and return the result
     public function query($sql) {
         $result = $this->conn->query($sql);
 
@@ -112,8 +105,8 @@ class Database {
         return $result;
     }
 
-    public function getNumberOfJobs() {
-        $query = "SELECT COUNT(*) AS jobCount FROM Jobs WHERE status = 'Active' OR status = 'Pending Payment'";
+    public function getNumberOfJobs($user_id) {
+        $query = "SELECT COUNT(*) AS jobCount FROM Jobs WHERE status = 'Active' OR status = 'Pending Payment' AND user_id = $user_id";
         $result = $this->conn->query($query);
 
         if ($result) {
@@ -124,8 +117,8 @@ class Database {
         }
     }
 
-    public function getMilesDriven() {
-        $query = "SELECT SUM(Distance * 2 * DaysWorked) AS miles FROM Jobs";
+    public function getMilesDriven($user_id) {
+        $query = "SELECT SUM(Distance * 2 * DaysWorked) AS miles FROM Jobs WHERE user_id = $user_id";
         $result = $this->conn->query($query);
 
         if ($result) {
@@ -136,8 +129,8 @@ class Database {
         }
     }
 
-    public function getDaysWorked() {
-        $query = "SELECT SUM(DaysWorked) AS days FROM Jobs";
+    public function getDaysWorked($user_id) {
+        $query = "SELECT SUM(DaysWorked) AS days FROM Jobs WHERE user_id = $user_id";
         $result = $this->conn->query($query);
 
         if ($result) {
@@ -148,8 +141,8 @@ class Database {
         }
     }
 
-    public function getNumberJobsCompleted() {
-        $query = "SELECT COUNT(*) AS jobCount FROM Jobs WHERE status = 'Paid'";
+    public function getNumberJobsCompleted($user_id) {
+        $query = "SELECT COUNT(*) AS jobCount FROM Jobs WHERE user_id = $user_id AND status = 'Paid'";
         $result = $this->conn->query($query);
 
         if ($result) {
@@ -160,8 +153,20 @@ class Database {
         }
     }
 
-    public function getAllJobs() {
-        $query = "SELECT * FROM Jobs ORDER BY CASE WHEN status = 'Active' THEN 1 WHEN status = 'Pending Payment' THEN 2 WHEN status = 'Paid' THEN 3 ELSE 4 END";
+    public function getNumberJobsOpen($user_id) {
+        $query = "SELECT COUNT(*) AS jobCount FROM Jobs WHERE user_id = $user_id AND status = 'Active' OR status = 'Pending Payment'";
+        $result = $this->conn->query($query);
+
+        if ($result) {
+            $row = $result->fetch_assoc();
+            return $row['jobCount'];
+        } else {
+            return false;
+        }
+    }
+
+    public function getAllJobsByID($user_id) {
+        $query = "SELECT * FROM Jobs WHERE user_id = $user_id ORDER BY CASE WHEN status = 'Active' THEN 1 WHEN status = 'Pending Payment' THEN 2 WHEN status = 'Paid' THEN 3 ELSE 4 END";
         $result = $this->conn->query($query);
     
         if ($result) {
@@ -171,8 +176,20 @@ class Database {
         }
     }
 
-    public function getAllJobsOpen() {
-        $query = "SELECT * FROM Jobs WHERE status IN ('Active', 'Pending Payment') ORDER BY CASE WHEN status = 'Active' THEN 0 ELSE 1 END, ClientName";
+    public function getAllJobsOpenByID($user_id) {
+        $query = "SELECT * FROM Jobs WHERE user_id = $user_id AND (status = 'Active' OR status = 'Pending Payment') ORDER BY CASE WHEN status = 'Active' THEN 1 WHEN status = 'Pending Payment' THEN 2 ELSE 3 END";
+        $result = $this->conn->query($query);
+    
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+    
+
+    public function getAllClients($user_id) {
+        $query = "SELECT * FROM Clients WHERE user_id = $user_id ORDER BY ClientName";
         $result = $this->conn->query($query);
     
         if ($result) {
@@ -182,44 +199,26 @@ class Database {
         }
     }
 
-    public function getAllClients() {
-        $query = "SELECT * FROM Clients ORDER BY ClientName";
-        $result = $this->conn->query($query);
-    
-        if ($result) {
-            return $result;
-        } else {
-            return false;
-        }
-    }
-
-    public function pdoNumQuery($table, $condition = '', $params = []) {
-
-        $sql = "SELECT COUNT(*) FROM $table" . ($condition ? " WHERE $condition" : "");
-        return $this->executeQuery($sql, $params)->fetchColumn();
-
-    }
-
-    public function addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $expenses, $daysWorked, $paymentMethod, $revenue, $status, $userID) {
-        $query = "INSERT INTO Jobs (ClientName, JobName, Address, PhoneNumber, Distance, SQFT, Expenses, DaysWorked, PaymentMethod, Revenue, Status)
-                  VALUES ('$clientName', '$jobName', '$address', '$phoneNumber', '$distance', '$sqft', '$expenses', '$daysWorked', '$paymentMethod', '$revenue', '$status')";
+    public function addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $expenses, $daysWorked, $paymentMethod, $revenue, $status, $user_id) {
+        $query = "INSERT INTO Jobs (ClientName, JobName, Address, PhoneNumber, Distance, SQFT, Expenses, DaysWorked, PaymentMethod, Revenue, Status, user_id)
+                  VALUES ('$clientName', '$jobName', '$address', '$phoneNumber', '$distance', '$sqft', '$expenses', '$daysWorked', '$paymentMethod', '$revenue', '$status', '$user_id')";
 
         $result = $this->conn->query($query);
 
         return $result;
     }
 
-    public function addNewClient($clientName, $contactPerson, $email, $phoneNumber, $address) {
-        $query = "INSERT INTO Clients (ClientName, ContactPerson, Email, PhoneNumber, Address)
-                  VALUES ('$clientName', '$contactPerson', '$email', '$phoneNumber', '$address')";
+    public function addNewClient($clientName, $contactPerson, $email, $phoneNumber, $address, $user_id) {
+        $query = "INSERT INTO Clients (ClientName, ContactPerson, Email, PhoneNumber, Address, user_id)
+                  VALUES ('$clientName', '$contactPerson', '$email', '$phoneNumber', '$address', '$user_id')";
 
         $result = $this->conn->query($query);
 
         return $result;
     }
     
-    public function getCash() {
-        $query = "SELECT SUM(Revenue) AS Revenue FROM Jobs WHERE Status = 'Paid' AND PaymentMethod = 'Cash'";
+    public function getCash($user_id) {
+        $query = "SELECT SUM(Revenue) AS Revenue FROM Jobs WHERE user_id = $user_id AND Status = 'Paid' AND PaymentMethod = 'Cash'";
         $result = $this->conn->query($query);
     
         if ($result) {
@@ -230,8 +229,8 @@ class Database {
         }
     }
 
-    public function getRevenue(){
-        $query = "SELECT SUM(Revenue) AS Revenue FROM Jobs WHERE status = 'Paid'";
+    public function getRevenue($user_id){
+        $query = "SELECT SUM(Revenue) AS Revenue FROM Jobs WHERE status = 'Paid' AND user_id = $user_id";
         $result = $this->conn->query($query);
         if ($result) {
             $row = $result->fetch_assoc();
@@ -241,21 +240,6 @@ class Database {
         }
     }
 
-    public function signIN($user_name, $password) {
-        $query = "SELECT * FROM Users WHERE UserName = '$userName' AND Password = '$password'";
-        $result = $this->conn->query($query);
-        if ($result) {
-            $row = $result->fetch_assoc();
-            if ($row) {
-                $_SESSION['userName'] = $userName;
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
 
     public function login($username, $password) {
 
@@ -270,17 +254,6 @@ class Database {
 
         return false;
 
-    }
-
-    public function getSessID($userName){
-        $query = "SELECT UserID FROM Users WHERE UserName = '$userName'";
-        $result = $this->conn->query($query);
-        if ($result) {
-            $row = $result->fetch_assoc();
-            return $row['UserID'];
-        } else {
-            return false;
-        }
     }
 
     public function addNewUser($userName, $password) {

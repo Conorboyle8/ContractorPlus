@@ -16,17 +16,7 @@ $database = new Database();
 </head>
 <body>
 
-<?php 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve the userName from the form submission
-    $userName = $_POST['userName'];
-
-    // Use the $userName in your Database operations
-    $UserID = $database->getSessID($userName);
-}
-$userID = isset($_GET['userID']) ? $_GET['userID'] : '';
-echo $userID;
-
+<?php
 // Assuming you have a method to add a new job in your Database class
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $database = new Database();
@@ -42,9 +32,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $paymentMethod = $_POST['paymentMethod'];
     $revenue = $_POST['revenue'];
     $status = $_POST['status'];
+    $user_id = $user_data['user_id'];
 
-    $success = $database->addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $expenses, $daysWorked, $paymentMethod, $revenue, $status, $userID);
-
+    $success = $database->addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $expenses, $daysWorked, $paymentMethod, $revenue, $status, $user_id);
+    echo $user_data['user_id'];
     if ($success) {
         echo "Job added successfully!";
     } else {
@@ -110,6 +101,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div>
                 <label for="revenue">Revenue:</label>
                 <input type="text" name="revenue" required>
+            </div>
+
+            <div>
+                 <label for="user_id">User ID:</label>
+                <input type="hidden" name="user_id" value="<?php echo $user_data['user_id']; ?>">
             </div>
 
             <div>

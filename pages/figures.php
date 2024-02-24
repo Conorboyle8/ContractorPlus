@@ -6,6 +6,7 @@
     include 'connection.php';
     include 'functions.php';
     $user_data = check_login($conn);
+    $user_id = $user_data['user_id'];
     echo "Welcome " . $user_data['user_name'];
 ?>
 <!DOCTYPE html>
@@ -32,7 +33,7 @@
                         <h6 class="text-center mb-0">Cash</h6>
                         <span class="text-xs">Cash Received</span>
                         <hr class="horizontal dark my-3">
-                        <h4 class="mb-0"><?php $cash = $database->getCash(); echo $cash; ?></h4>
+                        <h4 class="mb-0"><?php $cash = $database->getCash($user_id); echo $cash; ?></h4>
                     </div>
                 </div>
             </div>
@@ -51,7 +52,7 @@
                         <h6 class="text-center mb-0">Miles</h6>
                         <span class="text-xs">Miles Driven</span>
                         <hr class="horizontal dark my-3">
-                        <h4 class="mb-0"><?php $miles = ($database->getMilesDriven()); echo $miles; ?></h4>
+                        <h4 class="mb-0"><?php $miles = ($database->getMilesDriven($user_id)); echo $miles; ?></h4>
                     </div>
                 </div>
             </div>
@@ -70,7 +71,7 @@
                         <h6 class="text-center mb-0">Labor</h6>
                         <span class="text-xs">Days Worked</span>
                         <hr class="horizontal dark my-3">
-                        <h4 class="mb-0"><?php $days = ($database->getDaysWorked()); echo $days; ?></h4>
+                        <h4 class="mb-0"><?php $days = ($database->getDaysWorked($user_id)); echo $days; ?></h4>
                     </div>
                 </div>
             </div>
