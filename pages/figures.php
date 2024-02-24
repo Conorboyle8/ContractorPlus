@@ -1,3 +1,13 @@
+<?php
+    session_start();
+    include('NavBar.php');
+    require_once('../assets/includes/classes/Database.php');
+    $database = new Database();
+    include 'connection.php';
+    include 'functions.php';
+    $user_data = check_login($conn);
+    echo "Welcome " . $user_data['user_name'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,11 +15,6 @@
     <title>Forms</title>
 </head>
 <body>
-<?php
-include('NavBar.php');
-require_once('../assets/includes/classes/Database.php');
-$database = new Database();
-?>
 <div class="container-fluid py-4">
     <div class="col-xl-6">
         <div class="row">

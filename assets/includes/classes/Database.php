@@ -15,6 +15,26 @@ class Database {
         }
     }
 
+    public function check_login($conn){
+        if (isset($_SESSION['user_id'])) {
+            $id = $_SESSION['user_id'];
+            $query = "SELECT * FROM users WHERE usr_id = '$id' limit 1";
+            $result = mysqli_query($conn, $query);
+            if ($result && mysqli_num_rows($result) > 0) {
+                $user_data = mysqli_fetch_assoc($result);
+                return $user_data;
+            }
+        }
+        header("Location: login.php");
+        die;
+    }
+
+    public function pdoQuery($table, $condition, $params = []) {
+
+        return $this->executeQuery("SELECT * FROM $table WHERE $condition LIMIT 1", $params)->fetch(PDO::FETCH_ASSOC);
+
+    }
+
     public function getJobByID($jobID) {
         $query = "SELECT * FROM Jobs WHERE JobID = $jobID";
         $result = $this->conn->query($query);
@@ -180,7 +200,7 @@ class Database {
 
     }
 
-    public function addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $expenses, $daysWorked, $paymentMethod, $revenue, $status) {
+    public function addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $expenses, $daysWorked, $paymentMethod, $revenue, $status, $userID) {
         $query = "INSERT INTO Jobs (ClientName, JobName, Address, PhoneNumber, Distance, SQFT, Expenses, DaysWorked, PaymentMethod, Revenue, Status)
                   VALUES ('$clientName', '$jobName', '$address', '$phoneNumber', '$distance', '$sqft', '$expenses', '$daysWorked', '$paymentMethod', '$revenue', '$status')";
 
@@ -221,11 +241,43 @@ class Database {
         }
     }
 
-    public function signIn($userName, $password) {
+    public function signIN($user_name, $password) {
         $query = "SELECT * FROM Users WHERE UserName = '$userName' AND Password = '$password'";
         $result = $this->conn->query($query);
         if ($result) {
-            return $result;
+            $row = $result->fetch_assoc();
+            if ($row) {
+                $_SESSION['userName'] = $userName;
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function login($username, $password) {
+
+        $userData = $this->db->pdoQuery('USERS', 'usr_username = :username', ['username' => $username]);
+
+        if($userData && password_verify($password, $userData['usr_password'])) {
+
+            $_SESSION['user_id'] = $userData['usr_id'];
+            return true;
+
+        }
+
+        return false;
+
+    }
+
+    public function getSessID($userName){
+        $query = "SELECT UserID FROM Users WHERE UserName = '$userName'";
+        $result = $this->conn->query($query);
+        if ($result) {
+            $row = $result->fetch_assoc();
+            return $row['UserID'];
         } else {
             return false;
         }
@@ -238,17 +290,6 @@ class Database {
         $result = $this->conn->query($query);
 
         return $result;
-    }
-
-    public function getSessID(){
-        $query = "SELECT UserID FROM Users WHERE UserName = '$_SESSION[userName]'";
-        $result = $this->conn->query($query);
-        if ($result) {
-            $row = $result->fetch_assoc();
-            return $row['UserID'];
-        } else {
-            return false;
-        }
     }
 
     // Close the database connection

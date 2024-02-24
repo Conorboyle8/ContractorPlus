@@ -1,6 +1,12 @@
 <?php
-require_once('../assets/includes/classes/Database.php');
-$database = new Database();
+    session_start();
+    include('NavBar.php');
+    require_once('../assets/includes/classes/Database.php');
+    $database = new Database();
+    include 'connection.php';
+    include 'functions.php';
+    $user_data = check_login($conn);
+    echo "Welcome " . $user_data['user_name'];
 ?>
 
 <!DOCTYPE html>
@@ -10,8 +16,6 @@ $database = new Database();
     <title>Dashboard</title>
 </head>
 <body>
-
-<?php include('NavBar.php'); ?>
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">

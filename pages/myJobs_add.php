@@ -1,5 +1,13 @@
-<!-- addJob.php -->
-
+<?php
+session_start();
+include('NavBar.php'); 
+include 'connection.php';
+include 'functions.php';
+$user_data = check_login($conn);
+echo "Welcome " . $user_data['user_name'];
+require_once('../assets/includes/classes/Database.php');
+$database = new Database();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +16,16 @@
 </head>
 <body>
 
-<?php include('NavBar.php'); 
-require_once('../assets/includes/classes/Database.php');
+<?php 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve the userName from the form submission
+    $userName = $_POST['userName'];
+
+    // Use the $userName in your Database operations
+    $UserID = $database->getSessID($userName);
+}
+$userID = isset($_GET['userID']) ? $_GET['userID'] : '';
+echo $userID;
 
 // Assuming you have a method to add a new job in your Database class
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -26,7 +42,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $paymentMethod = $_POST['paymentMethod'];
     $revenue = $_POST['revenue'];
     $status = $_POST['status'];
-    $userID = $_SESSION['userID'];
 
     $success = $database->addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $expenses, $daysWorked, $paymentMethod, $revenue, $status, $userID);
 

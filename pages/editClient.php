@@ -1,4 +1,10 @@
 <?php
+session_start();
+include('NavBar.php'); 
+include 'connection.php';
+include 'functions.php';
+$user_data = check_login($conn);
+echo "Welcome " . $user_data['user_name'];
     // Move the require_once statement outside of the PHP block
     require_once('../assets/includes/classes/Database.php');
     $database = new Database();
@@ -13,7 +19,7 @@
 </head>
 <body>
 
-<?php include('NavBar.php'); 
+<?php 
 require_once('../assets/includes/classes/Database.php');
 $clientData = $database->getclientByID($clientID)->fetch_assoc();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
