@@ -118,7 +118,8 @@ $database = new Database();
                                     echo "<td>" . (isset($row['Distance']) ? $row['Distance'] : 'N/A') . "</td>";
                                     echo "<td>" . (isset($row['SQFT']) ? $row['SQFT'] : 'N/A') . "</td>";
                                     echo "<td>" . (isset($row['Status']) ? $row['Status'] : 'N/A') . "</td>";
-                                    echo "<td><button class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#editStatusModal' onclick='openEditStatusModal(\"" . $row['JobID'] . "\")'>Edit</button></td>";
+                                    $jobID = $row['JobID'];
+                                    echo "<td><a href='editJob.php?jobID=$jobID' class='btn btn-primary btn-sm'>Edit</a>";
                                     echo "</tr>";
                                 }
                                 ?>

@@ -23,11 +23,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sqft= $_POST['sqft'];
     $expenses = $_POST['expenses'];
     $daysWorked = $_POST['daysWorked'];
-    $revenue = $_POST['revenue'];
     $paymentMethod = $_POST['paymentMethod'];
+    $revenue = $_POST['revenue'];
     $status = $_POST['status'];
+    $userID = $_SESSION['userID'];
 
-    $success = $database->addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $expenses, $daysWorked, $revenue,$paymentMethod, $status);
+    $success = $database->addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $expenses, $daysWorked, $paymentMethod, $revenue, $status, $userID);
 
     if ($success) {
         echo "Job added successfully!";
@@ -78,11 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div>
-                <label for="revenue">Revenue:</label>
-                <input type="text" name="revenue" required>
-            </div>
-
-            <div>
                 <label for="daysWorked">Days Worked:</label>
                 <input type="text" name="daysWorked" required>
             </div>
@@ -92,9 +88,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <select name="paymentMethod" required>
                     <option value="Cash">Cash</option>
                     <option value="Check">Check</option>
+                    <option value="Pending">Pending</option>
                 </select>
             </div>
 
+            <div>
+                <label for="revenue">Revenue:</label>
+                <input type="text" name="revenue" required>
+            </div>
 
             <div>
                 <label for="status">Status:</label>

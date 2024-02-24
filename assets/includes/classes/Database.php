@@ -15,6 +15,72 @@ class Database {
         }
     }
 
+    public function getJobByID($jobID) {
+        $query = "SELECT * FROM Jobs WHERE JobID = $jobID";
+        $result = $this->conn->query($query);
+
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    public function getClientByID($clientID) {
+        $query = "SELECT * FROM Clients WHERE ClientID = $clientID";
+        $result = $this->conn->query($query);
+
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    public function updateJob($jobID, $updatedData) {
+        $sql = "UPDATE jobs SET 
+                ClientName = '{$updatedData['ClientName']}',
+                JobName = '{$updatedData['JobName']}',
+                Address = '{$updatedData['Address']}',
+                PhoneNumber = '{$updatedData['PhoneNumber']}',
+                Distance = '{$updatedData['Distance']}',
+                SQFT = '{$updatedData['SQFT']}',
+                Expenses = '{$updatedData['Expenses']}',
+                DaysWorked = '{$updatedData['DaysWorked']}',
+                PaymentMethod = '{$updatedData['PaymentMethod']}',
+                Revenue = '{$updatedData['Revenue']}',
+                Status = '{$updatedData['Status']}'
+                WHERE JobID = '{$jobID}'";
+
+        if ($this->conn->query($sql) === TRUE) {
+            // Update successful
+            return true;
+        } else {
+            // Update failed
+            echo "Error updating job: " . $this->conn->error;
+            return false;
+        }
+    }
+
+    public function updateClient($clientID, $updatedData) {
+        $sql = "UPDATE clients SET 
+                ClientName = '{$updatedData['ClientName']}',
+                ContactPerson = '{$updatedData['ContactPerson']}',
+                Email = '{$updatedData['Email']}',
+                PhoneNumber = '{$updatedData['PhoneNumber']}',
+                Address = '{$updatedData['Address']}'
+                WHERE ClientID = '{$clientID}'";
+
+        if ($this->conn->query($sql) === TRUE) {
+            // Update successful
+            return true;
+        } else {
+            // Update failed
+            echo "Error updating client: " . $this->conn->error;
+            return false;
+        }
+    }
+
     // Execute a query and return the result
     public function query($sql) {
         $result = $this->conn->query($sql);
@@ -124,7 +190,7 @@ class Database {
     }
 
     public function addNewClient($clientName, $contactPerson, $email, $phoneNumber, $address) {
-        $query = "INSERT INTO Clients (ClientName, ContactPerson, Email, Phone, Address)
+        $query = "INSERT INTO Clients (ClientName, ContactPerson, Email, PhoneNumber, Address)
                   VALUES ('$clientName', '$contactPerson', '$email', '$phoneNumber', '$address')";
 
         $result = $this->conn->query($query);
@@ -132,29 +198,58 @@ class Database {
         return $result;
     }
     
-    public function getCash(){
-        $query = "SELECT SUM(revenue) AS cash FROM Jobs WHERE status = 'Paid'";
+    public function getCash() {
+        $query = "SELECT SUM(Revenue) AS Revenue FROM Jobs WHERE Status = 'Paid' AND PaymentMethod = 'Cash'";
         $result = $this->conn->query($query);
+    
         if ($result) {
             $row = $result->fetch_assoc();
-            return $row['cash'];
+            return $row['Revenue'];
         } else {
             return false;
         }
     }
 
     public function getRevenue(){
-        $query = "SELECT SUM(revenue) AS revenue FROM Jobs WHERE status = 'Paid'";
+        $query = "SELECT SUM(Revenue) AS Revenue FROM Jobs WHERE status = 'Paid'";
         $result = $this->conn->query($query);
         if ($result) {
             $row = $result->fetch_assoc();
-            return $row['revenue'];
+            return $row['Revenue'];
         } else {
             return false;
         }
     }
 
-    
+    public function signIn($userName, $password) {
+        $query = "SELECT * FROM Users WHERE UserName = '$userName' AND Password = '$password'";
+        $result = $this->conn->query($query);
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    public function addNewUser($userName, $password) {
+        $query = "INSERT INTO Users (UserName, Password)
+                  VALUES ('$userName', '$password')";
+
+        $result = $this->conn->query($query);
+
+        return $result;
+    }
+
+    public function getSessID(){
+        $query = "SELECT UserID FROM Users WHERE UserName = '$_SESSION[userName]'";
+        $result = $this->conn->query($query);
+        if ($result) {
+            $row = $result->fetch_assoc();
+            return $row['UserID'];
+        } else {
+            return false;
+        }
+    }
 
     // Close the database connection
     public function close() {

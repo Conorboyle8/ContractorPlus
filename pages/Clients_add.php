@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div>
-                <button type="submit">Add Job</button>
+                <button type="submit">Add Client</button>
             </div>
         </form>
     </div>

@@ -18,7 +18,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editStatusModalLabel">Edit Job Status</h5>
+                    <h5 class="modal-title" id="editStatusModalLabel">Edit client Status</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -30,8 +30,8 @@
             <option value="Paid">Paid</option>
         </select>
 
-        <!-- Hidden input field to store the job ID -->
-        <input type="hidden" id="editJobID" name="editJobID">
+        <!-- Hidden input field to store the client ID -->
+        <input type="hidden" id="editclientID" name="editclientID">
     </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -48,7 +48,7 @@
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                         <div class="bg-gradient-primary shadow-primary border-radius-lg pt-3 pb-2 d-flex align-items-center">
                             <h6 class="text-white text-capitalize ps-3 me-2" style="font-size: 18px;">Clients</h6>
-                            <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addJobModal" style="font-size: 14px;" onclick="redirectToMyJobs()">Add</button>
+                            <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addclientModal" style="font-size: 14px;" onclick="redirectToMyclients()">Add</button>
                         </div>
                         <table class="table">
                             <thead>
@@ -58,19 +58,23 @@
                                     <th scope="col">Email</th>
                                     <th scope="col">Phone Number</th>
                                     <th scope="col">Address</th>
+                                    <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                // Use PHP to fetch and display job data from the database
-                                $result = $database->getAllClients(); // Replace with your actual method to fetch jobs
+                                // Use PHP to fetch and display client data from the database
+                                $result = $database->getAllClients(); // Replace with your actual method to fetch clients
                                 while ($row = $result->fetch_assoc()) {
                                     echo "<tr>";
                                     echo "<td>" . (isset($row['ClientName']) ? $row['ClientName'] : 'N/A') . "</td>";
                                     echo "<td>" . (isset($row['ContactPerson']) ? $row['ContactPerson'] : 'N/A') . "</td>";
                                     echo "<td>" . (isset($row['Email']) ? $row['Email'] : 'N/A') . "</td>";
-                                    echo "<td>" . (isset($row['Phone']) ? $row['Phone'] : 'N/A') . "</td>";
+                                    echo "<td>" . (isset($row['PhoneNumber']) ? $row['PhoneNumber'] : 'N/A') . "</td>";
                                     echo "<td>" . (isset($row['Address']) ? $row['Address'] : 'N/A') . "</td>";
+                                    $clientID = $row['ClientID'];
+                                    echo "<td><a href='editclient.php?clientID=$clientID' class='btn btn-primary btn-sm'>Edit</a>";
+                                    echo "<button class='btn btn-danger btn-sm' onclick='deleteRow(\"" . $row['ClientID'] . "\")'>Delete</button>";
                                     echo "</tr>";
                                 }
                                 ?>
@@ -208,35 +212,33 @@
   <script src="../assets/js/material-dashboard.min.js?v=3.1.0"></script>
 
   <script>
-    // Function to open the modal and pre-select the current status
-    function openEditStatusModal(jobID) {
-        // Assume you have a function to get the current status based on jobID
-        // In this example, we'll use a variable to simulate the current status
-        var currentStatus = getCurrentStatus(jobID);
-        document.getElementById('editStatus').value = currentStatus;
-        
-        // Store the jobID in a hidden input field for reference during the update
-        document.getElementById('editJobID').value = jobID;
-    }
+    function deleteRow(clientID) {
+        if (confirm("Are you sure you want to delete this row?")) {
+            // Perform AJAX request to delete the row
+            // This is a simplified example; adjust based on your data deletion logic
 
-    // Function to update the status (simulated, replace with your actual logic)
-    function updateStatus() {
-        // Get the selected status from the modal
-        var updatedStatus = document.getElementById('editStatus').value;
-        
-        // Get the jobID from the hidden input field
-        var jobID = document.getElementById('editJobID').value;
+            // Assuming you have a PHP script to handle the deletion (e.g., deleteclient.php)
+            var url = "deleteClient.php?clientID=" + clientID;
 
-        // Simulate updating the status (replace this with your actual logic)
-        alert("Updating status for Job ID " + jobID + " to " + updatedStatus);
-
-        // Close the modal
-        $('#editStatusModal').modal('hide');
+            // Perform AJAX request
+            fetch(url, { method: 'DELETE' })
+                .then(response => {
+                    if (response.ok) {
+                        // Reload the page or update the table after successful deletion
+                        location.reload(); // This will refresh the current page
+                    } else {
+                        console.error('Error deleting row:', response.statusText);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting row:', error);
+                });
+        }
     }
 </script>
 <script>
   // JavaScript function to handle button click and redirect
-  function redirectToMyJobs() {
+  function redirectToMyclients() {
     window.location.href = "../pages/clients_add.php";
   }
 </script>
