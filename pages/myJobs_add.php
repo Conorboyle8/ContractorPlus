@@ -4,7 +4,7 @@ include('NavBar.php');
 include 'connection.php';
 include 'functions.php';
 $user_data = check_login($conn);
-echo "Welcome " . $user_data['user_name'];
+echo "Welcome " . $user_data['full_name'];
 require_once('../assets/includes/classes/Database.php');
 $database = new Database();
 ?>

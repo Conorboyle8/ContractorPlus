@@ -6,7 +6,7 @@ include 'connection.php';
 include 'functions.php';
 $user_data = check_login($conn);
 $user_name = $user_data['user_name'];
-echo "Welcome " . $user_data['user_name'];
+$img = $user_data['img'];
 ?>
 <!DOCTYPE html>
 <html lang="en">

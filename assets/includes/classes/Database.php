@@ -216,6 +216,15 @@ class Database {
 
         return $result;
     }
+
+    public function addNewInvoice($client_fname, $address, $description, $Amount, $user_id) {
+        $query = "INSERT INTO Invoices (client_fname, address, description, Amount, user_id)
+                  VALUES ('$client_fname', '$address', '$description', '$Amount', '$user_id')";
+
+        $result = $this->conn->query($query);
+
+        return $result;
+    }
     
     public function getCash($user_id) {
         $query = "SELECT SUM(Revenue) AS Revenue FROM Jobs WHERE user_id = $user_id AND Status = 'Paid' AND PaymentMethod = 'Cash'";

@@ -6,7 +6,7 @@
     include 'connection.php';
     include 'functions.php';
     $user_data = check_login($conn);
-    echo "Welcome " . $user_data['user_name'];
+    echo "Welcome " . $user_data['full_name'];
     $user_id = $user_data['user_id'];
     ?>
 <!DOCTYPE html>
