@@ -1,2 +1,7 @@
 
  Expenses = materail + labor
+
+
+attatch client and job
+attach invoice and job
+user id shoudl be attached as fk to every table?

@@ -1,71 +1,84 @@
-<?php 
+<?php
 session_start();
 include('NavBar.php'); 
-require_once('../assets/includes/classes/Database.php');
 include 'connection.php';
 include 'functions.php';
 $user_data = check_login($conn);
 echo "Welcome " . $user_data['full_name'];
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Create Invoice</title>
-</head>
-<body>
-<?php
-// Assuming you have a method to add a new job in your Database class
+
+require_once('../assets/includes/classes/Database.php');
+$database = new Database();
+$jobID = isset($_GET['jobID']) ? $_GET['jobID'] : '';
+echo $jobID;
+
+$jobData = $database->getJobByID($jobID)->fetch_assoc();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $database = new Database();
     
-    $client_fname = $_POST['client_fname'];
-    $address = $_POST['address'];
+    $clientName = $jobData['ClientName'];
+    $address = $jobData['Address'];
+    $expenses = $jobData['Expenses'];
+    $formType = $_POST['formType']; // Update with your actual form field names
     $description = $_POST['description'];
-    $Amount = $_POST['Amount'];
     $user_id = $user_data['user_id'];
 
-    $success = $database->addNewInvoice($client_fname, $address, $description, $Amount, $user_id);
+    $success = $database->addNewInvoice($clientName, $address, $expenses, $formType, $description, $user_id);
 
     if ($success) {
-        echo "Invoice added successfully!";
+        // Get the last inserted invoice_id
+        $invoiceID = $database->conn->insert_id;
+
+        // Use JavaScript to redirect to Forms.php with jobID
+        echo "<script>window.location.href = 'Forms.php?jobID={$jobID}&invoiceID={$invoiceID}';</script>";
+        exit();
     } else {
-        echo "Error adding Invoice.";
+        echo "Error adding invoice.";
     }
 }
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Form</title>
+</head>
+<body>
+
 <div class="container-fluid py-4">
-        <h4>Add New Client</h4>
-        <!-- Add your form here -->
-        <form method="post" action="">
-            <!-- Add your form fields here -->
-            <div>
-                <label for="client_fname">Client First Name:</label>
-                <input type="text" name="client_fname" required>
-            </div>
+    <h4>Create Form</h4>
+    <form method="post" action="">
+        <div>
+            <div><?php echo $jobData['ClientName'];?></div>
+        </div>
 
-            <div>
-                <label for="address">Job Address:</label>
-                <input type="text" name="address" required>
-            </div>
+        <div>
+            <div><?php echo $address = $jobData['Address'];?></div>
+        </div>
 
-            <div>
-                <label for="description">Description:</label>
-                <input type="text" name="description" required>
-            </div>
+        <div>
+            <div><?php echo $expenses = $jobData['Expenses'];?></div>
+        </div>
 
-            <div>
-                <label for="Amount">Total labor + Materials:</label>
-                <input type="text" name="Amount" required>
-            </div>
+        <div>
+            <label for="formType">FormType:</label>
+            <select name="formType" required>
+                <option value="Invoice">Invoice</option>
+                <option value="Proposal">Proposal</option>
+            </select>
+        </div>
 
-            <div>
-                <button type="submit">Add Client</button>
-            </div>
-        </form>
-    </div>
+        <div>
+            <label for="description">Description:</label>
+            <textarea name="description" rows="4" cols="50" required></textarea>
+        </div>
 
-    </body>
+        <div>
+            <button type="submit">Create</button>
+        </div>
+    </form>
+</div>
 
-    </html>
+</body>
+</html>

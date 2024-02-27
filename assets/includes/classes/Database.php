@@ -40,6 +40,17 @@ class Database {
         }
     }
 
+    public function getInvByID($invoiceID) {
+        $query = "SELECT * FROM Invoices WHERE InvoiceID = $invoiceID";
+        $result = $this->conn->query($query);
+
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
     public function getClientByID($clientID) {
         $query = "SELECT * FROM Clients WHERE ClientID = $clientID";
         $result = $this->conn->query($query);
@@ -217,9 +228,9 @@ class Database {
         return $result;
     }
 
-    public function addNewInvoice($client_fname, $address, $description, $Amount, $user_id) {
-        $query = "INSERT INTO Invoices (client_fname, address, description, Amount, user_id)
-                  VALUES ('$client_fname', '$address', '$description', '$Amount', '$user_id')";
+    public function addNewInvoice($clientName, $address, $Expenses, $formType, $description, $user_id) {
+        $query = "INSERT INTO Invoices (Client_fname, address, Amount, formType, description, user_id)
+                  VALUES ('$clientName', '$address', '$Expenses', '$formType', '$description', '$user_id')";
 
         $result = $this->conn->query($query);
 
@@ -263,15 +274,6 @@ class Database {
 
         return false;
 
-    }
-
-    public function addNewUser($userName, $password) {
-        $query = "INSERT INTO Users (UserName, Password)
-                  VALUES ('$userName', '$password')";
-
-        $result = $this->conn->query($query);
-
-        return $result;
     }
 
     // Close the database connection

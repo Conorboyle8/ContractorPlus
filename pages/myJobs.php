@@ -19,44 +19,45 @@
 
 <body>
 
-    <!-- Modal for Edit Status -->
-    <div class="modal fade" id="editStatusModal" tabindex="-1" aria-labelledby="editStatusModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editStatusModalLabel">Edit Job Status</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-        <!-- Add your form fields for editing status here -->
-        <label for="editStatus">Edit Status:</label>
-        <select id="editStatus" name="editStatus" required>
-            <option value="Active">Active</option>
-            <option value="Pending">Pending Payment</option>
-            <option value="Paid">Paid</option>
-        </select>
+<!-- Modal for Edit Status -->
+<div class="modal fade" id="editStatusModal" tabindex="-1" aria-labelledby="editStatusModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-sm"> <!-- Added modal-dialog-sm class -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editStatusModalLabel">Edit Job Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Add your form fields for editing status here -->
+                <label for="editStatus">Edit Status:</label>
+                <select id="editStatus" name="editStatus" required>
+                    <option value="Active">Active</option>
+                    <option value="Pending">Pending Payment</option>
+                    <option value="Paid">Paid</option>
+                </select>
 
-        <!-- Hidden input field to store the job ID -->
-        <input type="hidden" id="editJobID" name="editJobID">
-    </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="updateStatus()">Save changes</button>
-                </div>
+                <!-- Hidden input field to store the job ID -->
+                <input type="hidden" id="editJobID" name="editJobID">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="updateStatus()">Save changes</button>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="container-fluid py-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="card my-4">
-                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                        <div class="bg-gradient-primary shadow-primary border-radius-lg pt-3 pb-2 d-flex align-items-center">
-                            <h6 class="text-white text-capitalize ps-3 me-2" style="font-size: 18px;">Projects</h6>
-                            <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addJobModal" style="font-size: 14px;" onclick="redirectToMyJobs()">Add</button>
-                        </div>
-                        <table class="table">
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-3 pb-2 d-flex align-items-center">
+                        <h6 class="text-white text-capitalize ps-3 me-2" style="font-size: 18px;">Projects</h6>
+                        <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addJobModal" style="font-size: 14px;" onclick="redirectToMyJobs()">Add</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table" style="font-size: 12px; max-width: 100%;">
                             <thead>
                                 <tr>
                                     <th scope="col">Client</th>
@@ -91,8 +92,10 @@
                                     echo "<td style='font-size: 14px;'>" . (isset($row['Revenue']) ? $row['Revenue'] : 'N/A') . "</td>";
                                     echo "<td style='font-size: 14px;'>" . (isset($row['Status']) ? $row['Status'] : 'N/A') . "</td>";
                                     $jobID = $row['JobID'];
-                                    echo "<td><a href='editJob.php?jobID=$jobID' class='btn btn-primary btn-sm'>Edit</a>";
+                                    echo "<td>";
+                                    echo "<a href='editJob.php?jobID=$jobID' class='btn btn-primary btn-sm'>Edit</a>";
                                     echo "<button class='btn btn-danger btn-sm' onclick='deleteRow(\"" . $row['JobID'] . "\")'>Delete</button>";
+                                    echo "<a href='MakeInv.php?jobID=$jobID' class='btn btn-primary btn-sm'>Forms</a>";
                                     echo "</td>";
                                     echo "</tr>";
                                 }
@@ -128,6 +131,26 @@
   function redirectToMyJobs() {
     window.location.href = "../pages/myjobs_add.php";
   }
+  function deleteRow($jobID) {
+        if (confirm("Are you sure you want to delete this row?")) {
+
+            var url = "deleteJob.php?jobID=" + $jobID;
+
+            // Perform AJAX request
+            fetch(url, { method: 'DELETE' })
+                .then(response => {
+                    if (response.ok) {
+                        // Reload the page or update the table after successful deletion
+                        location.reload(); // This will refresh the current page
+                    } else {
+                        console.error('Error deleting row:', response.statusText);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting row:', error);
+                });
+        }
+    }
 </script>
 </body>
 

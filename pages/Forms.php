@@ -3,8 +3,13 @@ session_start();
 include('NavForm.php');
 include 'connection.php';
 include 'functions.php';
+require_once('../assets/includes/classes/Database.php');
 $user_data = check_login($conn);
-$comp_name = $user_data['comp_name'];
+$database = new Database();
+$jobID = isset($_GET['jobID']) ? $_GET['jobID'] : '';
+$jobData = $database->getjobByID($jobID)->fetch_assoc();
+$invoiceID = isset($_GET['invoiceID']) ? $_GET['invoiceID'] : '';
+$invData = $database->getInvByID($invoiceID)->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,6 +44,7 @@ $comp_name = $user_data['comp_name'];
         .invoice-header span {
             color: green; /* Set the color to green */
         }
+
         .invoice-header span {
             font-size: 25px; /* Adjust the font size as needed */
         }
@@ -84,6 +90,20 @@ $comp_name = $user_data['comp_name'];
             font-weight: bold;
         }
 
+        .form p {
+            font-size: 24px; /* Set the desired font size for the form type */
+            color: green; /* Set the color to green */
+            margin-bottom: 20px; /* Add margin for spacing */
+        }
+
+        .invoice-items .text img {
+            max-width: 150px;
+            max-height: 150px;
+            width: auto;
+            height: auto;
+            margin-right: 10px;
+        }
+
         /* Print Styles */
         @media print {
             body {
@@ -112,27 +132,40 @@ $comp_name = $user_data['comp_name'];
 <body>
     <div class="invoice">
         <div class="invoice-header">
-        <div class="invoice-details">
-            <span><?php echo $user_data['comp_name'];?></span>
-            <span><?php echo $user_data['phone_number'];?></span>
+            <div class="invoice-details">
+                <span><?php echo $user_data['comp_name'];?></span>
+                <span><?php echo $user_data['phone_number'];?></span>
             </div>
         </div>
-        
+
         <div class="invoice-items">
             <div class="text">
-                <p>Address</p>
+                <img src="data:image/png;base64,<?php echo base64_encode($user_data['img']); ?>" alt="User Image">
+            </div>
+            <div class="form">
+                <p><?php echo $invData['formType'];?></p>
+            </div>
+            <div class="text">
+                <p><?php echo $jobData['Address'];?></p>
             </div>
 
             <div class="text">
-                <p>Hi Rachel</p>
+                <p>Hi <?php echo $jobData['ClientName'];?></p>
             </div>
             <div class="text">
-                <p>Description</p>
+                <div>Description: </div>
+                <p><?php echo $invData['description'];?></p>
             </div>
             <div class="text">
                 <p>
-                <span>Total For labor and materails: </span>
-                <span>$130.00</span>
+                    <span>Total For labor and materails: </span>
+                    <span>$<?php echo $jobData['Expenses'];?></span>
+                </p>
+            </div>
+            <div class="text">
+                <p>
+                    <span>Thank you </span>
+                    <span><?php echo $jobData['ClientName'];?></span>
                 </p>
             </div>
             <div>
@@ -144,7 +177,6 @@ $comp_name = $user_data['comp_name'];
         </div>
     </div>
 
-    
     <!-- Print button -->
     <button class="print-button" onclick="printInvoice()">Print Invoice</button>
 
@@ -155,4 +187,5 @@ $comp_name = $user_data['comp_name'];
         }
     </script>
 </body>
+
 </html>

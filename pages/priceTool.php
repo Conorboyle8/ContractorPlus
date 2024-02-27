@@ -22,7 +22,7 @@ echo "Welcome " . $user_data['full_name'];
         </div>
 
         <div>
-            <label for="sheets8ft">Enter num of over 8 ft sheets:</label>
+            <label for="sheets8ft">Enter num of sheets over 8 ft:</label>
             <input type="number" id="sheets8ft" required>
         </div>
 

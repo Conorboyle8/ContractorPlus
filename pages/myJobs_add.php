@@ -102,12 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="revenue">Revenue:</label>
                 <input type="text" name="revenue" required>
             </div>
-
-            <div>
-                 <label for="user_id">User ID:</label>
-                <input type="hidden" name="user_id" value="<?php echo $user_data['user_id']; ?>">
-            </div>
-
+            
             <div>
                 <label for="status">Status:</label>
                 <select name="status" required>
