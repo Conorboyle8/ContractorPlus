@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2024 at 01:44 AM
+-- Generation Time: Feb 28, 2024 at 03:23 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,7 +44,7 @@ CREATE TABLE `clients` (
 INSERT INTO `clients` (`ClientID`, `ClientName`, `ContactPerson`, `Email`, `PhoneNumber`, `Address`, `user_id`) VALUES
 (20, '4r4', '334', '334', '2', '234', NULL),
 (22, 'Conor C1', '2', '1', '2', '2', 7349142657770),
-(23, 'test', '456', '456', '456', '456', 460244627227568452);
+(24, 'test', 'Conor Boyle', 'conor_boyle8@yahoo.com', '4434931874', '19 Footbridge Trail', 460244627227568452);
 
 -- --------------------------------------------------------
 
@@ -60,15 +60,16 @@ CREATE TABLE `invoices` (
   `description` text DEFAULT NULL,
   `address` varchar(20) DEFAULT NULL,
   `client_fname` varchar(20) DEFAULT NULL,
-  `user_id` bigint(20) DEFAULT NULL
+  `user_id` bigint(20) DEFAULT NULL,
+  `formType` enum('Invoice','Proposal') NOT NULL DEFAULT 'Invoice'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `invoices`
 --
 
-INSERT INTO `invoices` (`InvoiceID`, `JobID`, `Amount`, `InvoiceDate`, `description`, `address`, `client_fname`, `user_id`) VALUES
-(1, NULL, 345.00, NULL, 'ert', 'ert', 'st', 460244627227568452);
+INSERT INTO `invoices` (`InvoiceID`, `JobID`, `Amount`, `InvoiceDate`, `description`, `address`, `client_fname`, `user_id`, `formType`) VALUES
+(27, NULL, 345.00, NULL, 'fgdnhnsrftghasdrguilasdhfiuSEHDRFIOUHWEIOFGiwegdfiuAWEGUIFGAWieufgiUAWEFGIPqugfpei7gP89FTG39P78GF9P3', '123 main', 'Conor', 745518154903530643, 'Invoice');
 
 -- --------------------------------------------------------
 
@@ -84,23 +85,23 @@ CREATE TABLE `jobs` (
   `PhoneNumber` varchar(20) DEFAULT NULL,
   `Distance` decimal(10,2) DEFAULT NULL,
   `SQFT` decimal(10,2) DEFAULT NULL,
-  `Expenses` decimal(10,2) DEFAULT NULL,
+  `LaborCost` decimal(10,2) DEFAULT NULL,
   `DaysWorked` decimal(10,2) DEFAULT NULL,
   `PaymentMethod` enum('Cash','Check','Pending') DEFAULT 'Pending',
   `Status` enum('Active','Pending Payment','Paid') DEFAULT 'Active',
   `ClientName` varchar(255) DEFAULT NULL,
   `Revenue` float(10,2) DEFAULT NULL,
-  `user_id` bigint(20) DEFAULT NULL
+  `user_id` bigint(20) DEFAULT NULL,
+  `MaterialCost` decimal(10,2) DEFAULT NULL,
+  `Profit` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `jobs`
 --
 
-INSERT INTO `jobs` (`JobID`, `ClientID`, `JobName`, `Address`, `PhoneNumber`, `Distance`, `SQFT`, `Expenses`, `DaysWorked`, `PaymentMethod`, `Status`, `ClientName`, `Revenue`, `user_id`) VALUES
-(98, NULL, '67', '67', '768', 76.00, 678.00, 67.00, 8678.00, 'Cash', 'Active', '6', 768.00, NULL),
-(102, NULL, '345', '345', '345', 345.00, 345.00, 345.00, 345.00, 'Cash', 'Active', '345', 345.00, 7349142657770),
-(105, NULL, '567', '567', '567', 56.00, 756.00, 7567.00, 567.00, 'Cash', 'Active', '567', 567.00, 460244627227568452);
+INSERT INTO `jobs` (`JobID`, `ClientID`, `JobName`, `Address`, `PhoneNumber`, `Distance`, `SQFT`, `LaborCost`, `DaysWorked`, `PaymentMethod`, `Status`, `ClientName`, `Revenue`, `user_id`, `MaterialCost`, `Profit`) VALUES
+(121, NULL, 'test', 'test', 'test', 69.00, 34.00, 40.00, 2.00, 'Cash', 'Paid', 'test', 100.00, 745518154903530643, 50.00, 10.00);
 
 -- --------------------------------------------------------
 
@@ -118,15 +119,11 @@ CREATE TABLE `users` (
   `phone_number` int(11) DEFAULT NULL,
   `comp_name` varchar(100) DEFAULT NULL,
   `full_name` varchar(100) DEFAULT NULL,
-  `img` blob DEFAULT NULL,
+  `img` longblob DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
 
---
--- Indexes for table `clients`
---
 ALTER TABLE `clients`
   ADD PRIMARY KEY (`ClientID`);
 
@@ -161,25 +158,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `ClientID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `ClientID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `InvoiceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `InvoiceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `JobID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `JobID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Constraints for dumped tables

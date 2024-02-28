@@ -81,20 +81,35 @@
                                 // Use PHP to fetch and display job data from the database
                                 $result = $database->getAllJobsByID($user_id); // Replace with your actual method to fetch jobs
                                 while ($row = $result->fetch_assoc()) {
+                                    $backgroundColor = '';
+                                    switch ($row['Status']) {
+                                        case 'Paid':
+                                            $backgroundColor = 'lightblue';
+                                            break;
+                                        case 'Pending Payment':
+                                            $backgroundColor = '#FFB600';
+                                            break;
+                                        case 'Active':
+                                            $backgroundColor = 'lightgreen';
+                                            break;
+                                        default:
+                                            $backgroundColor = ''; // Default color if none of the above
+                                    }
+                                    echo "<tr style='background-color: $backgroundColor;'>";
                                     echo "<tr>";
-                                    echo "<td style='font-size: 14px;'>" . (isset($row['ClientName']) ? $row['ClientName'] : 'N/A') . "</td>";
-                                    echo "<td style='font-size: 14px;'>" . (isset($row['JobName']) ? $row['JobName'] : 'N/A') . "</td>";
-                                    echo "<td style='font-size: 14px;'>" . (isset($row['Address']) ? $row['Address'] : 'N/A') . "</td>";
-                                    echo "<td style='font-size: 14px;'>" . (isset($row['PhoneNumber']) ? $row['PhoneNumber'] : 'N/A') . "</td>";
-                                    echo "<td style='font-size: 14px;'>" . (isset($row['Distance']) ? $row['Distance'] : 'N/A') . "</td>";
-                                    echo "<td style='font-size: 14px;'>" . (isset($row['SQFT']) ? $row['SQFT'] : 'N/A') . "</td>";
-                                    echo "<td style='font-size: 14px;'>" . (isset($row['Revenue']) ? $row['Revenue'] : 'N/A') . "</td>";
-                                    echo "<td style='font-size: 14px;'>" . (isset($row['LaborCost']) ? $row['LaborCost'] : 'N/A') . "</td>";
-                                    echo "<td style='font-size: 14px;'>" . (isset($row['MaterialCost']) ? $row['MaterialCost'] : 'N/A') . "</td>";
-                                    echo "<td style='font-size: 14px;'>" . (isset($row['Profit']) ? $row['Profit'] : 'N/A') . "</td>";
-                                    echo "<td style='font-size: 14px;'>" . (isset($row['DaysWorked']) ? $row['DaysWorked'] : 'N/A') . "</td>";
-                                    echo "<td style='font-size: 14px;'>" . (isset($row['PaymentMethod']) ? $row['PaymentMethod'] : 'N/A') . "</td>";
-                                    echo "<td style='font-size: 14px;'>" . (isset($row['Status']) ? $row['Status'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['ClientName']) ? $row['ClientName'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['JobName']) ? $row['JobName'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['Address']) ? $row['Address'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['PhoneNumber']) ? $row['PhoneNumber'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['Distance']) ? $row['Distance'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['SQFT']) ? $row['SQFT'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['Revenue']) ? $row['Revenue'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['LaborCost']) ? $row['LaborCost'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['MaterialCost']) ? $row['MaterialCost'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['Revenue']) ? $row['Revenue'] - $row['LaborCost'] - $row['MaterialCost'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['DaysWorked']) ? $row['DaysWorked'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['PaymentMethod']) ? $row['PaymentMethod'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['Status']) ? $row['Status'] : 'N/A') . "</td>";
                                     $jobID = $row['JobID'];
                                     echo "<td>";
                                     echo "<a href='editJob.php?jobID=$jobID' class='btn btn-primary btn-sm'>Edit</a>";

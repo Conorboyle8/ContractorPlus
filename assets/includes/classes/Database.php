@@ -202,6 +202,30 @@ class Database {
         }
     }
 
+    public function getNumberJobsActive($user_id) {
+        $query = "SELECT COUNT(*) AS jobCount FROM Jobs WHERE user_id = $user_id AND status = 'Active'";
+        $result = $this->conn->query($query);
+
+        if ($result) {
+            $row = $result->fetch_assoc();
+            return $row['jobCount'];
+        } else {
+            return false;
+        }
+    }
+
+    public function getNumberJobsPendingPayment($user_id) {
+        $query = "SELECT COUNT(*) AS jobCount FROM Jobs WHERE user_id = $user_id AND status = 'Pending Payment'";
+        $result = $this->conn->query($query);
+
+        if ($result) {
+            $row = $result->fetch_assoc();
+            return $row['jobCount'];
+        } else {
+            return false;
+        }
+    }
+
     public function getAllJobsByID($user_id) {
         $query = "SELECT * FROM Jobs WHERE user_id = $user_id ORDER BY CASE WHEN status = 'Active' THEN 1 WHEN status = 'Pending Payment' THEN 2 WHEN status = 'Paid' THEN 3 ELSE 4 END";
         $result = $this->conn->query($query);

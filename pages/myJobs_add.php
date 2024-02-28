@@ -4,7 +4,6 @@ include('NavBar.php');
 include 'connection.php';
 include 'functions.php';
 $user_data = check_login($conn);
-echo "Welcome " . $user_data['full_name'];
 require_once('../assets/includes/classes/Database.php');
 $database = new Database();
 ?>
@@ -37,9 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $profit = $revenue - $laborCost - $materialCost;
 
     $success = $database->addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $revenue, $laborCost, $materialCost, $profit, $daysWorked, $paymentMethod, $status, $user_id);
-    echo $user_data['user_id'];
     if ($success) {
-        echo "Job added successfully!";
+        echo "Job added successfully! Add another?";
     } else {
         echo "Error adding job.";
     }
