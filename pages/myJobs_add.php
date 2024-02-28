@@ -26,15 +26,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address = $_POST['address'];
     $phoneNumber = $_POST['phoneNumber'];
     $distance = $_POST['distance'];
-    $sqft= $_POST['sqft'];
-    $expenses = $_POST['expenses'];
+    $sqft = $_POST['sqft'];
+    $laborCost = $_POST['laborCost'];
+    $materialCost = $_POST['materialCost'];
     $daysWorked = $_POST['daysWorked'];
     $paymentMethod = $_POST['paymentMethod'];
     $revenue = $_POST['revenue'];
     $status = $_POST['status'];
     $user_id = $user_data['user_id'];
+    $profit = $revenue - $laborCost - $materialCost;
 
-    $success = $database->addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $expenses, $daysWorked, $paymentMethod, $revenue, $status, $user_id);
+    $success = $database->addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $revenue, $laborCost, $materialCost, $profit, $daysWorked, $paymentMethod, $status, $user_id);
     echo $user_data['user_id'];
     if ($success) {
         echo "Job added successfully!";
@@ -70,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div>
-                <label for="distance">Distance To:</label>
+                <label for="distance">Miles To Site:</label>
                 <input type="text" name="distance" required>
             </div>
 
@@ -80,8 +82,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div>
-                <label for="expenses">Expenses:</label>
-                <input type="text" name="expenses" required>
+                <label for="revenue">Revenue:</label>
+                <input type="text" name="revenue" required>
+            </div>
+
+            <div>
+                <label for="laborCost">Labor Cost:</label>
+                <input type="text" name="laborCost" required>
+            </div>
+
+            <div>
+                <label for="materialCost">Material Cost:</label>
+                <input type="text" name="materialCost" required>
             </div>
 
             <div>
@@ -96,11 +108,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="Check">Check</option>
                     <option value="Pending">Pending</option>
                 </select>
-            </div>
-
-            <div>
-                <label for="revenue">Revenue:</label>
-                <input type="text" name="revenue" required>
             </div>
             
             <div>

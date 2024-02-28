@@ -64,12 +64,14 @@
                                     <th scope="col">Job Name</th>
                                     <th scope="col">Address</th>
                                     <th scope="col">Phone Number</th>
-                                    <th scope="col">Distance To</th>
+                                    <th scope="col">Miles To Site</th>
                                     <th scope="col">SQFT</th>
-                                    <th scope="col">Expenses</th>
+                                    <th scope="col">Revenue</th>
+                                    <th scope="col">Labor Cost</th>
+                                    <th scope="col">Material Cost</th>
+                                    <th scope="col">Profit</th>
                                     <th scope="col">Days Worked</th>
                                     <th scope="col">Payment Method</th>
-                                    <th scope="col">Revenue</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Actions</th>
                                 </tr>
@@ -86,10 +88,12 @@
                                     echo "<td style='font-size: 14px;'>" . (isset($row['PhoneNumber']) ? $row['PhoneNumber'] : 'N/A') . "</td>";
                                     echo "<td style='font-size: 14px;'>" . (isset($row['Distance']) ? $row['Distance'] : 'N/A') . "</td>";
                                     echo "<td style='font-size: 14px;'>" . (isset($row['SQFT']) ? $row['SQFT'] : 'N/A') . "</td>";
-                                    echo "<td style='font-size: 14px;'>" . (isset($row['Expenses']) ? $row['Expenses'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px;'>" . (isset($row['Revenue']) ? $row['Revenue'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px;'>" . (isset($row['LaborCost']) ? $row['LaborCost'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px;'>" . (isset($row['MaterialCost']) ? $row['MaterialCost'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px;'>" . (isset($row['Profit']) ? $row['Profit'] : 'N/A') . "</td>";
                                     echo "<td style='font-size: 14px;'>" . (isset($row['DaysWorked']) ? $row['DaysWorked'] : 'N/A') . "</td>";
                                     echo "<td style='font-size: 14px;'>" . (isset($row['PaymentMethod']) ? $row['PaymentMethod'] : 'N/A') . "</td>";
-                                    echo "<td style='font-size: 14px;'>" . (isset($row['Revenue']) ? $row['Revenue'] : 'N/A') . "</td>";
                                     echo "<td style='font-size: 14px;'>" . (isset($row['Status']) ? $row['Status'] : 'N/A') . "</td>";
                                     $jobID = $row['JobID'];
                                     echo "<td>";

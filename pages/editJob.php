@@ -32,10 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'PhoneNumber' => $_POST['phoneNumber'],
         'Distance' => $_POST['distance'],
         'SQFT' => $_POST['sqft'],
-        'Expenses' => $_POST['expenses'],
+        'Revenue' => $_POST['revenue'],
+        'LaborCost' => $_POST['laborCost'],
+        'MaterialCost' => $_POST['materialCost'],
+        'Profit' => $_POST['revenue'] - $_POST['laborCost'] - $_POST['materialCost'], // Calculate profit
         'DaysWorked' => $_POST['daysWorked'],
         'PaymentMethod' => $_POST['paymentMethod'],
-        'Revenue' => $_POST['revenue'],
         'Status' => $_POST['status'],
     );
     $database->updateJob($jobID, $updatedData);
@@ -66,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div>
-                <label for="distance">Distance To:</label>
+                <label for="distance">Miles to:</label>
                 <input type="text" name="distance" value="<?php echo isset($jobData['Distance']) ? $jobData['Distance'] : ''; ?>" required>
             </div>
 
@@ -76,8 +78,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div>
-                <label for="expenses">Expenses:</label>
-                <input type="text" name="expenses" value="<?php echo isset($jobData['Expenses']) ? $jobData['Expenses'] : ''; ?>" required>
+                <label for="revenue">Revenue:</label>
+                <input type="text" name="revenue" value="<?php echo isset($jobData['Revenue']) ? $jobData['Revenue'] : ''; ?>" required>
+            </div>
+
+            <div>
+                <label for="laborCost">Labor Cost:</label>
+                <input type="text" name="laborCost" value="<?php echo isset($jobData['LaborCost']) ? $jobData['LaborCost'] : ''; ?>" required>
+            </div>
+
+            <div>
+                <label for="materialCost">Material Cost:</label>
+                <input type="text" name="materialCost" value="<?php echo isset($jobData['MaterialCost']) ? $jobData['MaterialCost'] : ''; ?>" required>
             </div>
 
             <div>
@@ -94,10 +106,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </select>
             </div>
 
-            <div>
-                <label for="revenue">Revenue:</label>
-                <input type="text" name="revenue" value="<?php echo isset($jobData['Revenue']) ? $jobData['Revenue'] : ''; ?>" required>
-            <div>
                 <label for="status">Status:</label>
                 <select name="status" required>
                     <option value="Active">Active</option>
