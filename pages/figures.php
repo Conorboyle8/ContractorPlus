@@ -157,7 +157,7 @@
                             <h6 class="text-center mb-0">Miles</h6>
                             <span class="text-xs">Miles Driven</span>
                             <hr class="horizontal dark my-3">
-                            <h4 class="mb-0"><?php $miles = ($database->getMilesDrivenYTD($user_id)); echo $miles; ?></h4>
+                            <h4 class="mb-0"><?php $miles = intval(($database->getMilesDrivenYTD($user_id))); echo $miles; ?></h4>
                         </div>
                     </div>
                 </div>
@@ -171,10 +171,10 @@
                             </div>
                         </div>
                         <div class="card-body pt-0 p-3 text-center">
-                            <h6 class="text-center mb-0">Miles</h6>
-                            <span class="text-xs">Miles Driven</span>
+                            <h6 class="text-center mb-0">Place holder</h6>
+                            <span class="text-xs">Place Holder</span>
                             <hr class="horizontal dark my-3">
-                            <h4 class="mb-0"><?php $miles = ($database->getMilesDrivenYTD($user_id)); echo $miles; ?></h4>
+                            <h4 class="mb-0">Place Holder</h4>
                         </div>
                     </div>
                 </div>

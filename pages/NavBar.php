@@ -48,31 +48,23 @@
         <li class="nav-item">
           <a class="nav-link text-white <?php echo (basename($_SERVER['PHP_SELF']) == 'myJobs.php') ? 'active bg-gradient-primary' : ''; ?>" href="../pages/myJobs.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">table_view</i>
+              <i class="material-icons opacity-10">construction</i>
             </div>
-            <span class="nav-link-text ms-1">MyJobs</span>
+            <span class="nav-link-text ms-1">Jobs</span>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white <?php echo (basename($_SERVER['PHP_SELF']) == 'Clients.php') ? 'active bg-gradient-primary' : ''; ?>" href="../pages/Clients.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">table_view</i>
+              <i class="material-icons opacity-10">person</i>
             </div>
             <span class="nav-link-text ms-1">Clients</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white <?php echo (basename($_SERVER['PHP_SELF']) == 'priceTool.php') ? 'active bg-gradient-primary' : ''; ?>" href="../pages/priceTool.php">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">table_view</i>
-            </div>
-            <span class="nav-link-text ms-1">Pricing Tool</span>
-          </a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link text-white <?php echo (basename($_SERVER['PHP_SELF']) == 'Figures.php') ? 'active bg-gradient-primary' : ''; ?>" href="../pages/Figures.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">receipt_long</i>
+              <i class="material-icons opacity-10">equalizer</i>
             </div>
             <span class="nav-link-text ms-1">Figures</span>
           </a>
@@ -107,7 +99,7 @@
         <li class="nav-item">
           <a class="nav-link text-white " href="../pages/logout.php">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">login</i>
+              <i class="material-icons opacity-10">power_settings_new</i>
             </div>
             <span class="nav-link-text ms-1">Log Out</span>
           </a>

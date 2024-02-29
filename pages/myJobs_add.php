@@ -32,11 +32,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $paymentMethod = $_POST['paymentMethod'];
     $revenue = $_POST['revenue'];
     $status = $_POST['status'];
+    $startDate = $_POST['startDate'];
     $completeDate = $_POST['completeDate'];
     $user_id = $user_data['user_id'];
     $profit = $revenue - $laborCost - $materialCost;
 
-    $success = $database->addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $revenue, $laborCost, $materialCost, $profit, $daysWorked, $paymentMethod, $status, $completeDate, $user_id);
+    $success = $database->addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $revenue, $laborCost, $materialCost, $profit, $daysWorked, $paymentMethod, $status, $startDate, $completeDate, $user_id);
     if ($success) {
         echo "Job added successfully! Add another?";
     } else {
@@ -103,6 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div>
                 <label for="paymentMethod">Payment Method:</label>
                 <select name="paymentMethod" required>
+                    <option value=""></option>
                     <option value="Cash">Cash</option>
                     <option value="Check">Check</option>
                     <option value="Pending">Pending</option>
@@ -112,10 +114,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div>
                 <label for="status">Status:</label>
                 <select name="status" required>
+                    <option value=""></option>
                     <option value="Active">Active</option>
                     <option value="Pending Payment">Pending Payment</option>
                     <option value="Paid">Paid</option>
                 </select>
+            </div>
+
+            <div>
+                <label for="startDate">Start Date:</label>
+                <input type="date" name="startDate" required>
             </div>
 
             <div>

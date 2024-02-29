@@ -4,12 +4,9 @@ include('NavBar.php');
 include 'connection.php';
 include 'functions.php';
 $user_data = check_login($conn);
-echo "Welcome " . $user_data['full_name'];
-
 require_once('../assets/includes/classes/Database.php');
 $database = new Database();
 $jobID = isset($_GET['jobID']) ? $_GET['jobID'] : '';
-echo $jobID;
 
 $jobData = $database->getJobByID($jobID)->fetch_assoc();
 
@@ -49,18 +46,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
 <div class="container-fluid py-4">
-    <h4>Create Form</h4>
+    <h4>Create Form for:</h4>
     <form method="post" action="">
         <div>
-            <div><?php echo $jobData['ClientName'];?></div>
+            <div>Client Name: <?php echo $jobData['ClientName'];?></div>
         </div>
 
         <div>
-            <div><?php echo $address = $jobData['Address'];?></div>
+            <div>Address: <?php echo $address = $jobData['Address'];?></div>
         </div>
 
         <div>
-            <div><?php echo $expenses = $jobData['LaborCost'] + $jobData['MaterialCost'];?></div>
+            <div>Total: $<?php echo $expenses = $jobData['LaborCost'] + $jobData['MaterialCost'];?></div>
         </div>
 
         <div>

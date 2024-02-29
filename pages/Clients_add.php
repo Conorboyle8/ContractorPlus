@@ -5,7 +5,6 @@ require_once('../assets/includes/classes/Database.php');
 include 'connection.php';
 include 'functions.php';
 $user_data = check_login($conn);
-echo "Welcome " . $user_data['full_name'];
 ?>
 <!DOCTYPE html>
 <html lang="en">

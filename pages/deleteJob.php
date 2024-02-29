@@ -1,9 +1,9 @@
 <?php
 require_once('../assets/includes/classes/Database.php');
 
-if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get jobID from the request
-    $jobID = $_GET['jobID'];
+    $jobID = $_POST['jobID'];
 
     // Validate jobID (you may need additional validation based on your requirements)
     if (!is_numeric($jobID)) {

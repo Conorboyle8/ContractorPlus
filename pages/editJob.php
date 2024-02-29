@@ -36,6 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'DaysWorked' => $_POST['daysWorked'],
         'PaymentMethod' => $_POST['paymentMethod'],
         'Status' => $_POST['status'],
+        'StartDate' => $_POST['startDate'],
+        'CompleteDate' => $_POST['completeDate']
     );
     $database->updateJob($jobID, $updatedData);
     echo '<script>window.location.href = "myJobs.php";</script>';
@@ -98,19 +100,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div>
                 <label for="paymentMethod">Payment Method:</label>
                 <select name="paymentMethod" required>
-                    <option value="Cash">Cash</option>
-                    <option value="Check">Check</option>
-                    <option value="Pending">Pending</option>
+                    <option value="Cash" <?php echo ($jobData['PaymentMethod'] == 'Cash') ? 'selected' : ''; ?>>Cash</option>
+                    <option value="Check" <?php echo ($jobData['PaymentMethod'] == 'Check') ? 'selected' : ''; ?>>Check</option>
+                    <option value="Pending" <?php echo ($jobData['PaymentMethod'] == 'Pending') ? 'selected' : ''; ?>>Pending</option>
                 </select>
             </div>
 
+            <div>
                 <label for="status">Status:</label>
                 <select name="status" required>
-                    <option value="Active">Active</option>
-                    <option value="Pending Payment">Pending Payment</option>
-                    <option value="Paid">Paid</option>
+                    <option value="Active" <?php echo ($jobData['Status'] == 'Active') ? 'selected' : ''; ?>>Active</option>
+                    <option value="Pending Payment" <?php echo ($jobData['Status'] == 'Pending Payment') ? 'selected' : ''; ?>>Pending Payment</option>
+                    <option value="Paid" <?php echo ($jobData['Status'] == 'Paid') ? 'selected' : ''; ?>>Paid</option>
                 </select>
             </div>
+
+            <div>       
+                <label for="startDate">Start Date:</label>
+                <input type="date" name="startDate" value="<?php echo isset($jobData['startDate']) ? $jobData['startDate'] : ''; ?>" required>
+            </div>
+
+            <div>
+                <label for="completeDate">Complete Date:</label>
+                <input type="date" name="completeDate" value="<?php echo isset($jobData['completeDate']) ? $jobData['completeDate'] : ''; ?>" required>
+            </div>
+
 
             <div>
                 <button type="submit">Submit Changes</button>

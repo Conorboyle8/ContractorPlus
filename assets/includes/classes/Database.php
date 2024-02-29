@@ -413,9 +413,9 @@ class Database {
         }
     }
 
-    public function addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $revenue, $laborCost, $materialCost, $profit, $daysWorked, $paymentMethod, $status, $completeDate, $user_id) {
-        $query = "INSERT INTO Jobs (ClientName, JobName, Address, PhoneNumber, Distance, SQFT, Revenue, LaborCost, MaterialCost, Profit, DaysWorked, PaymentMethod, Status, completeDate, user_id)
-          VALUES ('$clientName', '$jobName', '$address', '$phoneNumber', '$distance', '$sqft', '$revenue', '$laborCost', '$materialCost', '$profit', '$daysWorked', '$paymentMethod', '$status', '$completeDate', $user_id)";
+    public function addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $revenue, $laborCost, $materialCost, $profit, $daysWorked, $paymentMethod, $status, $startDate, $completeDate, $user_id) {
+        $query = "INSERT INTO Jobs (ClientName, JobName, Address, PhoneNumber, Distance, SQFT, Revenue, LaborCost, MaterialCost, Profit, DaysWorked, PaymentMethod, Status, startDate, completeDate, user_id)
+          VALUES ('$clientName', '$jobName', '$address', '$phoneNumber', '$distance', '$sqft', '$revenue', '$laborCost', '$materialCost', '$profit', '$daysWorked', '$paymentMethod', '$status', '$startDate', '$completeDate', $user_id)";
 
         $result = $this->conn->query($query);
 
