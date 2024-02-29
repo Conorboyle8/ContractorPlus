@@ -73,6 +73,7 @@
                                     <th scope="col">Days Worked</th>
                                     <th scope="col">Payment Method</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Date Completed</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
@@ -110,6 +111,7 @@
                                     echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['DaysWorked']) ? $row['DaysWorked'] : 'N/A') . "</td>";
                                     echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['PaymentMethod']) ? $row['PaymentMethod'] : 'N/A') . "</td>";
                                     echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['Status']) ? $row['Status'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['completeDate']) ? $row['completeDate'] : 'N/A') . "</td>";
                                     $jobID = $row['JobID'];
                                     echo "<td>";
                                     echo "<a href='editJob.php?jobID=$jobID' class='btn btn-primary btn-sm'>Edit</a>";

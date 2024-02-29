@@ -60,13 +60,13 @@
                 <i class="material-icons opacity-10">weekend</i>
               </div>
               <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">Revenue</p>
-                <h4 class="mb-0">$<?php echo $database->getRevenue($user_id); ?></h4>
+                <p class="text-sm mb-0 text-capitalize">Average Job lifecycle</p>
+                <h4 class="mb-0"><?php echo intval($database->getAvgDaysWorked($user_id)) . " days"; ?></h4>
               </div>
             </div>
             <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>than last week</p>
+              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">%3 </span>than last week</p>
             </div>
           </div>
         </div>
@@ -154,9 +154,17 @@
                 }
             </style>
         </div>
+        <div class="col-md-4">
+            <canvas id="myBarChart" width="400" height="500"></canvas>
+            <style>
+                #myBarChart {
+                    max-width: 100%; /* Adjust the maximum width for the chart */
+                    margin: 0 auto; /* Center the chart horizontally */
+                }
+            </style>
+        </div>
     </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -166,15 +174,15 @@
             datasets: [{
                 label: 'Revenue',
                 backgroundColor: 'lightblue', 
-                data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                data: [<?php echo $database->getRevByMonth($user_id, '1'); ?>, <?php echo $database->getRevByMonth($user_id, '2'); ?>, <?php echo $database->getRevByMonth($user_id, '3'); ?>, <?php echo $database->getRevByMonth($user_id, '4'); ?>, <?php echo $database->getRevByMonth($user_id, '5'); ?>, <?php echo $database->getRevByMonth($user_id, '6'); ?>, <?php echo $database->getRevByMonth($user_id, '7'); ?>, <?php echo $database->getRevByMonth($user_id, '8'); ?>, <?php echo $database->getRevByMonth($user_id, '9'); ?>, <?php echo $database->getRevByMonth($user_id, '10'); ?>, <?php echo $database->getRevByMonth($user_id, '11'); ?>, <?php echo $database->getRevByMonth($user_id, '12'); ?>]
             }, {
                 label: 'Expenses',
                 backgroundColor: '#FFB600',
-                data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                data: [<?php echo $database->getExpByMonth($user_id, '1'); ?>, <?php echo $database->getExpByMonth($user_id, '2'); ?>, <?php echo $database->getExpByMonth($user_id, '3'); ?>, <?php echo $database->getExpByMonth($user_id, '4'); ?>, <?php echo $database->getExpByMonth($user_id, '5'); ?>, <?php echo $database->getExpByMonth($user_id, '6'); ?>, <?php echo $database->getExpByMonth($user_id, '7'); ?>, <?php echo $database->getExpByMonth($user_id, '8'); ?>, <?php echo $database->getExpByMonth($user_id, '9'); ?>, <?php echo $database->getExpByMonth($user_id, '10'); ?>, <?php echo $database->getExpByMonth($user_id, '11'); ?>, <?php echo $database->getExpByMonth($user_id, '12'); ?>]
             }, {
                 label: 'Profit',
                 backgroundColor: 'lightgreen',
-                data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                data: [<?php echo $database->getProfitByMonth($user_id, '1'); ?>, <?php echo $database->getProfitByMonth($user_id, '2'); ?>, <?php echo $database->getProfitByMonth($user_id, '3'); ?>, <?php echo $database->getProfitByMonth($user_id, '4'); ?>, <?php echo $database->getProfitByMonth($user_id, '5'); ?>, <?php echo $database->getProfitByMonth($user_id, '6'); ?>, <?php echo $database->getProfitByMonth($user_id, '7'); ?>, <?php echo $database->getProfitByMonth($user_id, '8'); ?>, <?php echo $database->getProfitByMonth($user_id, '9'); ?>, <?php echo $database->getProfitByMonth($user_id, '10'); ?>, <?php echo $database->getProfitByMonth($user_id, '11'); ?>, <?php echo $database->getProfitByMonth($user_id, '12'); ?>]
             }]
         };
 
@@ -202,6 +210,52 @@
         });
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Sample data
+        var data = {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            datasets: [{
+                label: 'Revenue',
+                backgroundColor: 'lightblue', 
+                data: [<?php echo $database->getRevByMonth($user_id, '1'); ?>, <?php echo $database->getRevByMonth($user_id, '2'); ?>, <?php echo $database->getRevByMonth($user_id, '3'); ?>, <?php echo $database->getRevByMonth($user_id, '4'); ?>, <?php echo $database->getRevByMonth($user_id, '5'); ?>, <?php echo $database->getRevByMonth($user_id, '6'); ?>, <?php echo $database->getRevByMonth($user_id, '7'); ?>, <?php echo $database->getRevByMonth($user_id, '8'); ?>, <?php echo $database->getRevByMonth($user_id, '9'); ?>, <?php echo $database->getRevByMonth($user_id, '10'); ?>, <?php echo $database->getRevByMonth($user_id, '11'); ?>, <?php echo $database->getRevByMonth($user_id, '12'); ?>]
+            }, {
+                label: 'Expenses',
+                backgroundColor: '#FFB600',
+                data: [<?php echo $database->getExpByMonth($user_id, '1'); ?>, <?php echo $database->getExpByMonth($user_id, '2'); ?>, <?php echo $database->getExpByMonth($user_id, '3'); ?>, <?php echo $database->getExpByMonth($user_id, '4'); ?>, <?php echo $database->getExpByMonth($user_id, '5'); ?>, <?php echo $database->getExpByMonth($user_id, '6'); ?>, <?php echo $database->getExpByMonth($user_id, '7'); ?>, <?php echo $database->getExpByMonth($user_id, '8'); ?>, <?php echo $database->getExpByMonth($user_id, '9'); ?>, <?php echo $database->getExpByMonth($user_id, '10'); ?>, <?php echo $database->getExpByMonth($user_id, '11'); ?>, <?php echo $database->getExpByMonth($user_id, '12'); ?>]
+            }, {
+                label: 'Profit',
+                backgroundColor: 'lightgreen',
+                data: [<?php echo $database->getProfitByMonth($user_id, '1'); ?>, <?php echo $database->getProfitByMonth($user_id, '2'); ?>, <?php echo $database->getProfitByMonth($user_id, '3'); ?>, <?php echo $database->getProfitByMonth($user_id, '4'); ?>, <?php echo $database->getProfitByMonth($user_id, '5'); ?>, <?php echo $database->getProfitByMonth($user_id, '6'); ?>, <?php echo $database->getProfitByMonth($user_id, '7'); ?>, <?php echo $database->getProfitByMonth($user_id, '8'); ?>, <?php echo $database->getProfitByMonth($user_id, '9'); ?>, <?php echo $database->getProfitByMonth($user_id, '10'); ?>, <?php echo $database->getProfitByMonth($user_id, '11'); ?>, <?php echo $database->getProfitByMonth($user_id, '12'); ?>]
+            }]
+        };
+
+        // Chart configuration
+        var options = {
+            responsive: true,
+            scales: {
+                x: {
+                    stacked: true
+                },
+                y: {
+                    stacked: true
+                }
+            }
+        };
+
+        // Get the canvas element
+        var ctx = document.getElementById('myBarChart').getContext('2d');
+
+        // Create the stacked bar chart
+        var myStackedBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: options
+        });
+    });
+</script>
+
 
 
   <script src="../assets/js/core/popper.min.js"></script>

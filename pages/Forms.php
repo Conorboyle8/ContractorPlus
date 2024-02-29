@@ -163,7 +163,7 @@ $invData = $database->getInvByID($invoiceID)->fetch_assoc();
             <div class="text">
                 <p>
                     <span>Total For labor and materails: </span>
-                    <span>$<?php echo $jobData['Expenses'];?></span>
+                    <span>$<?php echo $jobData['LaborCost'] + $jobData['MaterialCost'];?></span>
                 </p>
             </div>
             <div class="text">

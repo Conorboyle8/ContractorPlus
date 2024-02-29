@@ -18,7 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $clientName = $jobData['ClientName'];
     $address = $jobData['Address'];
-    $expenses = $jobData['Expenses'];
+    $laborCost = $jobData['LaborCost'];
+    $materialCost = $jobData['MaterialCost'];
+    $expenses = $laborCost + $materialCost;
     $formType = $_POST['formType']; // Update with your actual form field names
     $description = $_POST['description'];
     $user_id = $user_data['user_id'];
@@ -58,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <div>
-            <div><?php echo $expenses = $jobData['Expenses'];?></div>
+            <div><?php echo $expenses = $jobData['LaborCost'] + $jobData['MaterialCost'];?></div>
         </div>
 
         <div>

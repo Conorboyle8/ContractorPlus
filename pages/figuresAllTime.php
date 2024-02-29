@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Figures YTD</title>
+    <title>Figures All Time</title>
     <style>
         .slider-container {
             text-align: center;
@@ -19,7 +19,7 @@
             padding: 10px 20px;
             font-size: 14px;
             cursor: pointer;
-            background-color: blue;
+            background-color: lightblue;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -28,7 +28,7 @@
             padding: 10px 20px;
             font-size: 14px;
             cursor: pointer;
-            background-color: lightblue;
+            background-color: blue;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -68,9 +68,9 @@
                         <div class="card-body pt-0 p-3 text-center">
                             <h6 class="text-center mb-0">Profit</h6>
                             <hr class="horizontal dark my-3">
-                            <h4 class="mb-0">Cash: $<?php echo $database->getCashYTD($user_id); ?></h4>
-                            <h4 class="mb-0">Check: $<?php echo $database->getCheckYTD($user_id); ?></h4>
-                            <h4 class="mb-0">Total: $<?php echo  $database->getCashYTD($user_id) + $database->getCheckYTD($user_id); ?></h4>
+                            <h4 class="mb-0">Cash: $<?php echo $database->getCash($user_id); ?></h4>
+                            <h4 class="mb-0">Check: $<?php echo $database->getCheck($user_id); ?></h4>
+                            <h4 class="mb-0">Total: $<?php echo  $database->getCash($user_id) + $database->getCheck($user_id); ?></h4>
                         </div>
                     </div>
                 </div>
@@ -86,9 +86,9 @@
                         <div class="card-body pt-0 p-3 text-center">
                             <h6 class="text-center mb-0">Expenses</h6>
                             <hr class="horizontal dark my-3">
-                            <h4 class="mb-0">Labor: $<?php echo $database->getLaborCostYTD($user_id)?></h4>
-                            <h4 class="mb-0">Material: $<?php echo $database->getMaterialCostYTD($user_id)?></h4>
-                            <h4 class="mb-0">Total: $<?php echo $database->getLaborCostYTD($user_id) + $database->getMaterialCost($user_id)?></h4>
+                            <h4 class="mb-0">Labor: $<?php echo $database->getLaborCost($user_id)?></h4>
+                            <h4 class="mb-0">Material: $<?php echo $database->getMaterialCost($user_id)?></h4>
+                            <h4 class="mb-0">Total: $<?php echo $database->getLaborCost($user_id) + $database->getMaterialCost($user_id)?></h4>
                         </div>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                             <h6 class="text-center mb-0">Jobs</h6>
                             <span class="text-xs">Jobs Completed</span>
                             <hr class="horizontal dark my-3">
-                            <h4 class="mb-0"><?php $jobsComp = $database->getNumJobsCompletedYTD($user_id); echo $jobsComp; ?></h4>
+                            <h4 class="mb-0"><?php $jobsComp = $database->getNumberJobsCompleted($user_id); echo $jobsComp; ?></h4>
                         </div>
                     </div>
                 </div>
@@ -121,9 +121,9 @@
                         <div class="card-body pt-0 p-3 text-center">
                             <h6 class="text-center mb-0">Revenue</h6>
                             <hr class="horizontal dark my-3">
-                            <h4 class="mb-0">Cash: $<?php echo $database->getRevCashYTD($user_id); ?></h4>
-                            <h4 class="mb-0">Check: $<?php echo $database->getRevCheckYTD($user_id); ?></h4>
-                            <h4 class="mb-0">Total: $<?php echo $database->getRevCashYTD($user_id) + $database->getRevCheckYTD($user_id); ?></h4>
+                            <h4 class="mb-0">Cash: $<?php echo $database->getRevCash($user_id); ?></h4>
+                            <h4 class="mb-0">Check: $<?php echo $database->getRevCheck($user_id); ?></h4>
+                            <h4 class="mb-0">Total: $<?php echo $database->getRevCash($user_id) + $database->getRevCheck($user_id); ?></h4>
                         </div>
                     </div>
                 </div>
@@ -140,7 +140,7 @@
                             <h6 class="text-center mb-0">Labor</h6>
                             <span class="text-xs">Days Worked</span>
                             <hr class="horizontal dark my-3">
-                            <h4 class="mb-0"><?php $days = ($database->getDaysWorkedYTD($user_id)); echo $days; ?></h4>
+                            <h4 class="mb-0"><?php $days = ($database->getDaysWorked($user_id)); echo $days; ?></h4>
                         </div>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
                             <h6 class="text-center mb-0">Miles</h6>
                             <span class="text-xs">Miles Driven</span>
                             <hr class="horizontal dark my-3">
-                            <h4 class="mb-0"><?php $miles = ($database->getMilesDrivenYTD($user_id)); echo $miles; ?></h4>
+                            <h4 class="mb-0"><?php $miles = ($database->getMilesDriven($user_id)); echo $miles; ?></h4>
                         </div>
                     </div>
                 </div>
@@ -174,7 +174,7 @@
                             <h6 class="text-center mb-0">Miles</h6>
                             <span class="text-xs">Miles Driven</span>
                             <hr class="horizontal dark my-3">
-                            <h4 class="mb-0"><?php $miles = ($database->getMilesDrivenYTD($user_id)); echo $miles; ?></h4>
+                            <h4 class="mb-0"><?php $miles = ($database->getMilesDriven($user_id)); echo $miles; ?></h4>
                         </div>
                     </div>
                 </div>
