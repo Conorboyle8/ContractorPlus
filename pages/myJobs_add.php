@@ -14,6 +14,7 @@ $database = new Database();
     <title>Add New Job</title>
     <script>
         function fillJobForm(firstName, lastName, address, phoneNumber, clientID) {
+            
             document.querySelector('input[name="firstName"]').value = firstName;
             document.querySelector('input[name="lastName"]').value = lastName;
             document.querySelector('input[name="address"]').value = address;
@@ -22,48 +23,73 @@ $database = new Database();
         }
     </script>
     <style>
-    tbody tr {
-        cursor: pointer;
-    }
+        body {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        tbody tr.selected {
+            background-color: lightblue;
+        }
+
+        .table-container {
+            width: 100%; /* Adjust the width as needed */
+            margin-right: 100px;
+        }
+
+        table {
+            border-collapse: collapse;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        tbody tr {
+            cursor: pointer;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card {
+            max-width: 100%; /* Adjust the max-width as needed */
+        }
 </style>
 </head>
-<div class="container-fluid py-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="card my-4">
-                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                        <div class="bg-gradient-primary shadow-primary border-radius-lg pt-3 pb-2 d-flex align-items-center">
-                            <h6 class="text-white text-capitalize ps-3 me-2" style="font-size: 18px;">Select Client or</h6>
-                            <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addclientModal" style="font-size: 14px;" onclick="redirectToMyclients()">Add</button>
-                        </div>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Client Name</th>
-                                    <th scope="col">Phone Number</th>
-                                    <th scope="col">Address</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+<div class="container">
+        <div class="table-container">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-3 pb-2 d-flex align-items-center">
+                        <h6 class="text-white text-capitalize ps-3 me-2" style="font-size: 18px;">Select Client or</h6>
+                        <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addclientModal" style="font-size: 14px;" onclick="redirectToMyclients()">Add</button>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Client Name</th>
+                                <th scope="col">Phone Number</th>
+                                <th scope="col">Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <?php
-                                $user_id = $user_data['user_id'];
-                                $result = $database->getAllClients($user_id);
-                                while ($row = $result->fetch_assoc()) {
-                                    echo "<tr onclick='fillJobForm(\"" . $row['FirstName'] . "\", \"" . $row['LastName'] . "\", \"" . $row['Address'] . "\", \"" . $row['PhoneNumber'] . "\", \"" . $row['ClientID'] . "\")'>";
-                                    echo "<td>" . $row['FirstName'] . " " . $row['LastName'] . "</td>";
-                                    echo "<td>" . $row['PhoneNumber'] . "</td>";
-                                    echo "<td>" . $row['Address'] . "</td>";
-                                    echo "</tr>";
-                                }
+                            $user_id = $user_data['user_id'];
+                            $result = $database->getRecentClients($user_id);
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<tr onclick='fillJobForm(\"" . $row['FirstName'] . "\", \"" . $row['LastName'] . "\", \"" . $row['Address'] . "\", \"" . $row['PhoneNumber'] . "\", \"" . $row['ClientID'] . "\")'>";
+                                echo "<td>" . $row['FirstName'] . " " . $row['LastName'] . "</td>";
+                                echo "<td>" . $row['PhoneNumber'] . "</td>";
+                                echo "<td>" . $row['Address'] . "</td>";
+                                echo "</tr>";
+                            }
                             ?>
-                            </tbody>
-                </table>
-              </div>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
 <body>
 
 <?php
@@ -98,8 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
-<div class="container-fluid py-4">
+<div class="table-container">
         <h4>Add New Job</h4>
         <!-- Add your form here -->
         <form method="post" action="">

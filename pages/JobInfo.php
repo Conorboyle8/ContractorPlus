@@ -17,7 +17,7 @@ $jobData = $database->getJobByID($jobID)->fetch_assoc();
 </head>
 <body>
 <div class="container-fluid px-2 px-md-4">
-      <div class="card card-body mx-3 mx-md-4 mt-n6">
+      <div class="card card-body mx-3 mx-md-4 mt-n6" >
         <div class="row gx-4 mb-2">
           <div class="col-auto">
           </div>

@@ -23,7 +23,8 @@ $jobData = $database->getJobByID($jobID)->fetch_assoc();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle form submission
     $updatedData = array(
-        'ClientName' => $_POST['clientName'],
+        'FirstName' => $_POST['firstName'],
+        'LastName' => $_POST['lastName'],
         'JobName' => $_POST['jobName'],
         'Address' => $_POST['address'],
         'PhoneNumber' => $_POST['phoneNumber'],
@@ -48,8 +49,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h4>Edit Job</h4>
         <form method="post" action="">
             <div>
-                <label for="clientName">Client Name:</label>
-                <input type="text" name="clientName" value="<?php echo isset($jobData['ClientName']) ? $jobData['ClientName'] : ''; ?>" required>
+                <label for="FirstName">First Name:</label>
+                <input type="text" name="firstName" value="<?php echo isset($jobData['FirstName']) ? $jobData['FirstName'] : ''; ?>" required>
+            </div>
+
+            <div>
+                <label for="LastName">Last Name:</label>
+                <input type="text" name="lastName" value="<?php echo isset($jobData['LastName']) ? $jobData['LastName'] : ''; ?>" required>
             </div>
 
             <div>

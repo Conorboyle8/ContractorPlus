@@ -89,7 +89,7 @@ class Database {
     public function updateJob($jobID, $updatedData) {
         $sql = "UPDATE jobs SET 
                 FirstName = '{$updatedData['FirstName']}',
-                LastName = '{$updatedData['FastName']}',
+                LastName = '{$updatedData['LastName']}',
                 JobName = '{$updatedData['JobName']}',
                 Address = '{$updatedData['Address']}',
                 PhoneNumber = '{$updatedData['PhoneNumber']}',
@@ -102,6 +102,8 @@ class Database {
                 DaysWorked = '{$updatedData['DaysWorked']}',
                 PaymentMethod = '{$updatedData['PaymentMethod']}',
                 Status = '{$updatedData['Status']}'
+                StartDate = '{$updatedData['StartDate']}'
+                CompleteDate = '{$updatedData['CompleteDate']}'
                 WHERE JobID = '{$jobID}'";
 
         if ($this->conn->query($sql) === TRUE) {
@@ -395,6 +397,17 @@ class Database {
 
     public function getAllClients($user_id) {
         $query = "SELECT * FROM Clients WHERE user_id = $user_id ORDER BY FirstName";
+        $result = $this->conn->query($query);
+    
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    public function getRecentClients($user_id) {
+        $query = "SELECT * FROM Clients WHERE user_id = $user_id ORDER BY DateAdded DESC LIMIT 10";
         $result = $this->conn->query($query);
     
         if ($result) {
