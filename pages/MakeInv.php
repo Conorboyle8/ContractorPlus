@@ -13,7 +13,7 @@ $jobData = $database->getJobByID($jobID)->fetch_assoc();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $database = new Database();
     
-    $clientName = $jobData['ClientName'];
+    $firstName = $jobData['FirstName'];
     $address = $jobData['Address'];
     $laborCost = $jobData['LaborCost'];
     $materialCost = $jobData['MaterialCost'];
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = $_POST['description'];
     $user_id = $user_data['user_id'];
 
-    $success = $database->addNewInvoice($clientName, $address, $expenses, $formType, $description, $user_id);
+    $success = $database->addNewInvoice($firstName, $address, $expenses, $formType, $description, $user_id);
 
     if ($success) {
         // Get the last inserted invoice_id
@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h4>Create Form for:</h4>
     <form method="post" action="">
         <div>
-            <div>Client Name: <?php echo $jobData['ClientName'];?></div>
+            <div>Client Name: <?php echo $jobData['FirstName'];?></div>
         </div>
 
         <div>

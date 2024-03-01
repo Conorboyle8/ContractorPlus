@@ -40,7 +40,7 @@ $jobData = $database->getJobByID($jobID)->fetch_assoc();
                 <div class="form-group">
                   <label class="form-label
                   ">Client Name</label>
-                  <input type="text" class="form-control" value="<?php echo $jobData['ClientName']; ?>" disabled>
+                  <input type="text" class="form-control" value="<?php echo $jobData['FirstName'] . ' ' . $jobData['LastName']; ?>" disabled>
                 </div>
               </div>
               <div class="col-md-6">

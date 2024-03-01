@@ -88,7 +88,8 @@ class Database {
 
     public function updateJob($jobID, $updatedData) {
         $sql = "UPDATE jobs SET 
-                ClientName = '{$updatedData['ClientName']}',
+                FirstName = '{$updatedData['FirstName']}',
+                LastName = '{$updatedData['FastName']}',
                 JobName = '{$updatedData['JobName']}',
                 Address = '{$updatedData['Address']}',
                 PhoneNumber = '{$updatedData['PhoneNumber']}',
@@ -115,7 +116,8 @@ class Database {
 
     public function updateClient($clientID, $updatedData) {
         $sql = "UPDATE clients SET 
-                ClientName = '{$updatedData['ClientName']}',
+                FirstName = '{$updatedData['FirstName']}',
+                LastName = '{$updatedData['LastName']}',
                 ContactPerson = '{$updatedData['ContactPerson']}',
                 Email = '{$updatedData['Email']}',
                 PhoneNumber = '{$updatedData['PhoneNumber']}',
@@ -392,7 +394,7 @@ class Database {
     
 
     public function getAllClients($user_id) {
-        $query = "SELECT * FROM Clients WHERE user_id = $user_id ORDER BY ClientName";
+        $query = "SELECT * FROM Clients WHERE user_id = $user_id ORDER BY FirstName";
         $result = $this->conn->query($query);
     
         if ($result) {
@@ -403,7 +405,7 @@ class Database {
     }
 
     public function getAllClientsYTD($user_id) {
-        $query = "SELECT * FROM Clients WHERE user_id = $user_id AND YEAR(dateAdded) = YEAR(CURDATE()) ORDER BY ClientName";
+        $query = "SELECT * FROM Clients WHERE user_id = $user_id AND YEAR(dateAdded) = YEAR(CURDATE()) ORDER BY FirstName";
         $result = $this->conn->query($query);
     
         if ($result) {
@@ -413,27 +415,27 @@ class Database {
         }
     }
 
-    public function addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $revenue, $laborCost, $materialCost, $profit, $daysWorked, $paymentMethod, $status, $startDate, $completeDate, $user_id) {
-        $query = "INSERT INTO Jobs (ClientName, JobName, Address, PhoneNumber, Distance, SQFT, Revenue, LaborCost, MaterialCost, Profit, DaysWorked, PaymentMethod, Status, startDate, completeDate, user_id)
-          VALUES ('$clientName', '$jobName', '$address', '$phoneNumber', '$distance', '$sqft', '$revenue', '$laborCost', '$materialCost', '$profit', '$daysWorked', '$paymentMethod', '$status', '$startDate', '$completeDate', $user_id)";
+    public function addNewJob($firstName, $lastName, $jobName, $address, $phoneNumber, $distance, $sqft, $revenue, $laborCost, $materialCost, $profit, $daysWorked, $paymentMethod, $status, $startDate, $completeDate, $user_id, $clientID) {
+        $query = "INSERT INTO Jobs (FirstName, LastName, JobName, Address, PhoneNumber, Distance, SQFT, Revenue, LaborCost, MaterialCost, Profit, DaysWorked, PaymentMethod, Status, startDate, completeDate, user_id, ClientID)
+                  VALUES ('$firstName', '$lastName', '$jobName', '$address', '$phoneNumber', '$distance', '$sqft', '$revenue', '$laborCost', '$materialCost', '$profit', '$daysWorked', '$paymentMethod', '$status', '$startDate', '$completeDate', '$user_id', '$clientID')";
+    
+        $result = $this->conn->query($query);
+    
+        return $result;
+    }    
+
+    public function addNewClient($firstName, $lastName,  $email, $phoneNumber, $address, $user_id) {
+        $query = "INSERT INTO Clients (FirstName, LastName, Email, PhoneNumber, Address, user_id)
+                  VALUES ('$firstName', '$lastName', '$email', '$phoneNumber', '$address', '$user_id')";
 
         $result = $this->conn->query($query);
 
         return $result;
     }
 
-    public function addNewClient($clientName, $contactPerson, $email, $phoneNumber, $address, $user_id) {
-        $query = "INSERT INTO Clients (ClientName, ContactPerson, Email, PhoneNumber, Address, user_id)
-                  VALUES ('$clientName', '$contactPerson', '$email', '$phoneNumber', '$address', '$user_id')";
-
-        $result = $this->conn->query($query);
-
-        return $result;
-    }
-
-    public function addNewInvoice($clientName, $address, $Expenses, $formType, $description, $user_id) {
+    public function addNewInvoice($firstName, $address, $Expenses, $formType, $description, $user_id) {
         $query = "INSERT INTO Invoices (Client_fname, address, Amount, formType, description, user_id)
-                  VALUES ('$clientName', '$address', '$Expenses', '$formType', '$description', '$user_id')";
+                  VALUES ('$firstName', '$address', '$Expenses', '$formType', '$description', '$user_id')";
 
         $result = $this->conn->query($query);
 

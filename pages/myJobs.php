@@ -85,7 +85,7 @@ $user_id = $user_data['user_id'];
                                     }
                                     $jobID = $row['JobID'];
                                     echo "<tr style='background-color: $backgroundColor;' data-job-id='$jobID'>";
-                                    echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['ClientName']) ? $row['ClientName'] : 'N/A') . "</td>";
+                                    echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['FirstName']) ? $row['FirstName'] : 'N/A') . " " . (isset($row['LastName']) ? $row['LastName'] : 'N/A') . "</td>";
                                     echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['JobName']) ? $row['JobName'] : 'N/A') . "</td>";
                                     echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['Address']) ? $row['Address'] : 'N/A') . "</td>";
                                     echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['PhoneNumber']) ? $row['PhoneNumber'] : 'N/A') . "</td>";

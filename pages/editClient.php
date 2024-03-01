@@ -23,7 +23,8 @@ $clientData = $database->getclientByID($clientID)->fetch_assoc();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle form submission
     $updatedData = array(
-        'ClientName' => $_POST['clientName'],
+        'FirstName' => $_POST['firstName'],
+        'LastName' => $_POST['lastName'],
         'ContactPerson' => $_POST['contactPerson'],
         'Email' => $_POST['email'],
         'PhoneNumber' => $_POST['phoneNumber'],
@@ -37,10 +38,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h4>Edit Client</h4>
         <form method="post" action="">
             <div>
-                <label for="clientName">Client Name:</label>
-                <input type="text" name="clientName" value="<?php echo isset($clientData['ClientName']) ? $clientData['ClientName'] : ''; ?>" required>
+                <label for="clientName">First Name:</label>
+                <input type="text" name="clientName" value="<?php echo isset($firstName) ? $firstName : ''; ?>" required>
             </div>
 
+            <div>
+                <label for="lastName">Last Name:</label>
+                <input type="text" name="lastName" value="<?php echo isset($lastName) ? $lastName : ''; ?>" required>
+            </div>
+            
             <div>
                 <label for="contactPerson">Contact Person:</label>
                 <input type="text" name="contactPerson" value="<?php echo isset($jobData['ContactPerson']) ? $jobData['ContactPerson'] : ''; ?>" required>

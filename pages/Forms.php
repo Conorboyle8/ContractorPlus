@@ -154,7 +154,7 @@ $invData = $database->getInvByID($invoiceID)->fetch_assoc();
             </div>
 
             <div class="text">
-                <p>Hi <?php echo $jobData['ClientName'];?></p>
+                <p>Hi <?php echo $jobData['FirstName'];?></p>
             </div>
             <div class="text">
                 <div>Description: </div>
@@ -169,7 +169,7 @@ $invData = $database->getInvByID($invoiceID)->fetch_assoc();
             <div class="text">
                 <p>
                     <span>Thank you </span>
-                    <span><?php echo $jobData['ClientName'];?></span>
+                    <span><?php echo $jobData['FirstName'];?></span>
                 </p>
             </div>
             <div class="text">

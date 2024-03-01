@@ -59,7 +59,6 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Client Name</th>
-                                    <th scope="col">Contact Person</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Phone Number</th>
                                     <th scope="col">Address</th>
@@ -72,8 +71,7 @@
                                 $result = $database->getAllClients($user_id); // Replace with your actual method to fetch clients
                                 while ($row = $result->fetch_assoc()) {
                                     echo "<tr>";
-                                    echo "<td>" . (isset($row['ClientName']) ? $row['ClientName'] : 'N/A') . "</td>";
-                                    echo "<td>" . (isset($row['ContactPerson']) ? $row['ContactPerson'] : 'N/A') . "</td>";
+                                    echo "<td>" . (isset($row['FirstName']) ? $row['FirstName'] : 'N/A') . " " . (isset($row['LastName']) ? $row['LastName'] : 'N/A') . "</td>";
                                     echo "<td>" . (isset($row['Email']) ? $row['Email'] : 'N/A') . "</td>";
                                     echo "<td>" . (isset($row['PhoneNumber']) ? $row['PhoneNumber'] : 'N/A') . "</td>";
                                     echo "<td>" . (isset($row['Address']) ? $row['Address'] : 'N/A') . "</td>";

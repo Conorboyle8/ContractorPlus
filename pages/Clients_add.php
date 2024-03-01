@@ -18,14 +18,14 @@ $user_data = check_login($conn);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $database = new Database();
     
-    $clientName = $_POST['clientName']; // Update with your actual form field names
-    $contactPerson = $_POST['contactPerson'];
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
     $email = $_POST['email'];
     $phoneNumber = $_POST['phoneNumber'];
     $address= $_POST['address'];
     $user_id = $user_data['user_id'];
 
-    $success = $database->addNewclient($clientName, $contactPerson, $email, $phoneNumber, $address, $user_id);
+    $success = $database->addNewclient($firstName, $lastName, $email, $phoneNumber, $address, $user_id);
 
     if ($success) {
         echo "Client added successfully!";
@@ -37,32 +37,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <div class="container-fluid py-4">
         <h4>Add New Client</h4>
-        <!-- Add your form here -->
         <form method="post" action="">
-            <!-- Add your form fields here -->
             <div>
-                <label for="clientName">Client Name:</label>
-                <input type="text" name="clientName" required>
+                <label for="firstName">First Name:</label>
+                <input type="text" name="firstName">
             </div>
 
             <div>
-                <label for="contactPerson">Contact Person:</label>
-                <input type="text" name="contactPerson" required>
-            </div>
+                <label for="lastName">Last Name:</label>
+                <input type="text" name="lastName">
+
 
             <div>
                 <label for="email">Email:</label>
-                <input type="text" name="email" required>
+                <input type="text" name="email">
             </div>
 
             <div>
                 <label for="phoneNumber">Phone Number:</label>
-                <input type="text" name="phoneNumber" required>
+                <input type="text" name="phoneNumber">
             </div>
 
             <div>
                 <label for="address">Address:</label>
-                <input type="text" name="address" required>
+                <input type="text" name="address">
             </div>
 
             <div>

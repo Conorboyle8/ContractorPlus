@@ -12,7 +12,58 @@ $database = new Database();
 <head>
     <meta charset="UTF-8">
     <title>Add New Job</title>
+    <script>
+        function fillJobForm(firstName, lastName, address, phoneNumber, clientID) {
+            document.querySelector('input[name="firstName"]').value = firstName;
+            document.querySelector('input[name="lastName"]').value = lastName;
+            document.querySelector('input[name="address"]').value = address;
+            document.querySelector('input[name="phoneNumber"]').value = phoneNumber;
+            document.querySelector('input[name="clientID"]').value = clientID;
+        }
+    </script>
+    <style>
+    tbody tr {
+        cursor: pointer;
+    }
+</style>
 </head>
+<div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card my-4">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                        <div class="bg-gradient-primary shadow-primary border-radius-lg pt-3 pb-2 d-flex align-items-center">
+                            <h6 class="text-white text-capitalize ps-3 me-2" style="font-size: 18px;">Select Client or</h6>
+                            <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addclientModal" style="font-size: 14px;" onclick="redirectToMyclients()">Add</button>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Client Name</th>
+                                    <th scope="col">Phone Number</th>
+                                    <th scope="col">Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                                $user_id = $user_data['user_id'];
+                                $result = $database->getAllClients($user_id);
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<tr onclick='fillJobForm(\"" . $row['FirstName'] . "\", \"" . $row['LastName'] . "\", \"" . $row['Address'] . "\", \"" . $row['PhoneNumber'] . "\", \"" . $row['ClientID'] . "\")'>";
+                                    echo "<td>" . $row['FirstName'] . " " . $row['LastName'] . "</td>";
+                                    echo "<td>" . $row['PhoneNumber'] . "</td>";
+                                    echo "<td>" . $row['Address'] . "</td>";
+                                    echo "</tr>";
+                                }
+                            ?>
+                            </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 <body>
 
 <?php
@@ -20,7 +71,8 @@ $database = new Database();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $database = new Database();
     
-    $clientName = $_POST['clientName']; // Update with your actual form field names
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
     $jobName = $_POST['jobName'];
     $address = $_POST['address'];
     $phoneNumber = $_POST['phoneNumber'];
@@ -36,8 +88,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $completeDate = $_POST['completeDate'];
     $user_id = $user_data['user_id'];
     $profit = $revenue - $laborCost - $materialCost;
+    $clientID = $_POST['clientID'];
 
-    $success = $database->addNewJob($clientName, $jobName, $address, $phoneNumber, $distance, $sqft, $revenue, $laborCost, $materialCost, $profit, $daysWorked, $paymentMethod, $status, $startDate, $completeDate, $user_id);
+    $success = $database->addNewJob($firstName, $lastName, $jobName, $address, $phoneNumber, $distance, $sqft, $revenue, $laborCost, $materialCost, $profit, $daysWorked, $paymentMethod, $status, $startDate, $completeDate, $user_id, $clientID);
     if ($success) {
         echo "Job added successfully! Add another?";
     } else {
@@ -52,58 +105,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form method="post" action="">
             <!-- Add your form fields here -->
             <div>
-                <label for="clientName">Client Name:</label>
-                <input type="text" name="clientName" required>
+                <label for="firstName">First Name:</label>
+                <input type="text" name="firstName" >
+            </div>
+
+            <div>
+                <label for="lastName">Last Name:</label>
+                <input type="text" name="lastName" >
             </div>
 
             <div>
                 <label for="jobName">Job Name:</label>
-                <input type="text" name="jobName" required>
+                <input type="text" name="jobName" >
             </div>
 
             <div>
                 <label for="address">Address:</label>
-                <input type="text" name="address" required>
+                <input type="text" name="address" >
             </div>
 
             <div>
                 <label for="phoneNumber">Phone Number:</label>
-                <input type="text" name="phoneNumber" required>
+                <input type="text" name="phoneNumber" >
             </div>
 
             <div>
                 <label for="distance">Miles To Site:</label>
-                <input type="text" name="distance" required>
+                <input type="text" name="distance" >
             </div>
 
             <div>
                 <label for="sqft">SQFT:</label>
-                <input type="text" name="sqft" required>
+                <input type="text" name="sqft" >
             </div>
 
             <div>
                 <label for="revenue">Revenue:</label>
-                <input type="text" name="revenue" required>
+                <input type="text" name="revenue" >
             </div>
 
             <div>
                 <label for="laborCost">Labor Cost:</label>
-                <input type="text" name="laborCost" required>
+                <input type="text" name="laborCost" >
             </div>
 
             <div>
                 <label for="materialCost">Material Cost:</label>
-                <input type="text" name="materialCost" required>
+                <input type="text" name="materialCost" >
             </div>
 
             <div>
                 <label for="daysWorked">Days Worked:</label>
-                <input type="text" name="daysWorked" required>
+                <input type="text" name="daysWorked" >
             </div>
 
             <div>
                 <label for="paymentMethod">Payment Method:</label>
-                <select name="paymentMethod" required>
+                <select name="paymentMethod" >
                     <option value=""></option>
                     <option value="Cash">Cash</option>
                     <option value="Check">Check</option>
@@ -113,7 +171,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <div>
                 <label for="status">Status:</label>
-                <select name="status" required>
+                <select name="status" >
                     <option value=""></option>
                     <option value="Active">Active</option>
                     <option value="Pending Payment">Pending Payment</option>
@@ -123,7 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div>
                 <label for="startDate">Start Date:</label>
-                <input type="date" name="startDate" required>
+                <input type="date" name="startDate" >
             </div>
 
             <div>
@@ -131,12 +189,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="date" name="completeDate">
             </div>
 
+            <input type="hidden" name="clientID" value="clientID">
+
             <div>
                 <button type="submit">Add Job</button>
             </div>
         </form>
     </div>
+    <script>
+  // JavaScript function to handle button click and redirect
+  function redirectToMyclients() {
+    window.location.href = "../pages/clients_add.php";
+  }
 
+</script>
     </body>
 
     </html>
