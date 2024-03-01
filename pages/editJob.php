@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div>
                 <label for="completeDate">Complete Date:</label>
-                <input type="date" name="completeDate" value="<?php echo isset($jobData['completeDate']) ? $jobData['completeDate'] : ''; ?>" required>
+                <input type="date" name="completeDate" value="<?php echo isset($jobData['completeDate']) ? $jobData['completeDate'] : ''; ?>">
             </div>
 
 

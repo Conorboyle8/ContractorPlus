@@ -106,7 +106,6 @@
                                 <th scope="col" style="width: 15%;">Address</th>
                                 <th scope="col" style="width: 15%;">Phone Number</th>
                                 <th scope="col" style="width: 15%;">Status</th>
-                                <th scope="col" style="width: 10%;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -128,16 +127,13 @@
                                         default:
                                             $backgroundColor = ''; // Default color if none of the above
                                           }
-                                          echo "<tr style='background-color: $backgroundColor;'>";
-                                          echo "<tr>";
+                                          echo "<tr style='background-color: $backgroundColor; cursor: pointer;' class='job-row' data-job-id='" . $row['JobID'] . "'>";
                                           echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['ClientName']) ? $row['ClientName'] : 'N/A') . "</td>";
                                           echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['JobName']) ? $row['JobName'] : 'N/A') . "</td>";
                                           echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['Address']) ? $row['Address'] : 'N/A') . "</td>";
                                           echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['PhoneNumber']) ? $row['PhoneNumber'] : 'N/A') . "</td>";
                                           echo "<td style='font-size: 14px; background-color: $backgroundColor;'>" . (isset($row['Status']) ? $row['Status'] : 'N/A') . "</td>";
                                           $jobID = $row['JobID'];
-                                          echo "<td style='font-size: 14px; background-color: $backgroundColor;'><a href='editJob.php?jobID=$jobID' class='btn btn-primary btn-sm'>Edit</a></td>";
-                                          echo "</tr>";
                                         }
                             ?>
                         </tbody>
@@ -217,6 +213,16 @@
     function redirectToMyJobs() {
     window.location.href = "../pages/myjobs_add.php";
   }
+  document.addEventListener('DOMContentLoaded', function () {
+        const jobRows = document.querySelectorAll('.job-row');
+
+        jobRows.forEach(row => {
+            row.addEventListener('click', function () {
+                const jobId = this.getAttribute('data-job-id');
+                window.location.href = `JobInfo.php?jobID=${jobId}`;
+            });
+        });
+    });
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>

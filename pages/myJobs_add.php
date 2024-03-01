@@ -128,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div>
                 <label for="completeDate">Complete Date:</label>
-                <input type="date" name="completeDate" required>
+                <input type="date" name="completeDate">
             </div>
 
             <div>
