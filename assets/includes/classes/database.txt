@@ -1,24 +1,63 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Mar 13, 2024 at 01:02 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `cm`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clients`
+--
+
 CREATE TABLE `clients` (
   `ClientID` int(11) NOT NULL,
-  `ClientName` varchar(255) NOT NULL,
-  `ContactPerson` varchar(255) DEFAULT NULL,
+  `FirstName` varchar(255) NOT NULL,
   `Email` varchar(255) DEFAULT NULL,
   `PhoneNumber` varchar(20) DEFAULT NULL,
   `Address` varchar(255) DEFAULT NULL,
-  `user_id` bigint(20) DEFAULT NULL
+  `user_id` bigint(20) DEFAULT NULL,
+  `LastName` varchar(255) DEFAULT NULL,
+  `DateAdded` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `clients` (`ClientID`, `ClientName`, `ContactPerson`, `Email`, `PhoneNumber`, `Address`, `user_id`) VALUES
-(20, '4r4', '334', '334', '2', '234', NULL),
-(22, 'Conor C1', '2', '1', '2', '2', 7349142657770),
-(24, 'test', 'Conor Boyle', 'conor_boyle8@yahoo.com', '4434931874', '19 Footbridge Trail', 460244627227568452),
-(25, 'test', 'Conor Boyle', 'iop', '4434931874', '19 Footbridge Trail', 745518154903530643),
-(26, 'test', 'Conor Boyle', 'conor_boyle8@yahoo.com', '4434931874', '19 Footbridge Trail', 1535675711267);
+--
+-- Dumping data for table `clients`
+--
+
+INSERT INTO `clients` (`ClientID`, `FirstName`, `Email`, `PhoneNumber`, `Address`, `user_id`, `LastName`, `DateAdded`) VALUES
+(1, 'John', 'conor_boyle8@yahoo.com', '4434931874', '19 Footbridge Trail', 745518154903530643, 'Hi', '2024-03-01 22:21:26'),
+(20, '4r4', '334', '2', '234', NULL, NULL, '2024-03-01 22:18:39'),
+(22, 'Conor C1', '1', '2', '2', 7349142657770, NULL, '2024-03-01 22:18:39'),
+(24, 'test', 'conor_boyle8@yahoo.com', '4434931874', '19 Footbridge Trail', 460244627227568452, NULL, '2024-03-01 22:18:39'),
+(26, 'test', 'conor_boyle8@yahoo.com', '4434931874', '19 Footbridge Trail', 1535675711267, NULL, '2024-03-01 22:18:39'),
+(27, 'Conor', '', 'conor_boyle8@yahoo.c', '4434931874', 19, 'Boyle', '2024-03-01 22:18:39'),
+(28, 'Conor', 'conor_boyle8@yahoo.com', '4434931874', '19 Footbridge Trail', 745518154903530643, 'Boyle', '2024-03-01 22:18:39'),
+(29, 'Liam', 'liam@email', '2225411', 'street ', 745518154903530643, 'Boyle', '2024-03-01 22:18:39'),
+(30, 'Conor', 'ddd', '4434931874', '19 Footbridge Trail', 745518154903530643, 'Boyle', '2024-03-01 22:23:12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoices`
+--
 
 CREATE TABLE `invoices` (
   `InvoiceID` int(11) NOT NULL,
@@ -32,7 +71,12 @@ CREATE TABLE `invoices` (
   `formType` enum('Invoice','Proposal') NOT NULL DEFAULT 'Invoice'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `invoices`
+--
+
 INSERT INTO `invoices` (`InvoiceID`, `JobID`, `Amount`, `InvoiceDate`, `description`, `address`, `client_fname`, `user_id`, `formType`) VALUES
+(1, NULL, 855.00, NULL, '8o87', '12 coastal', '', 745518154903530643, 'Invoice'),
 (27, NULL, 345.00, NULL, 'fgdnhnsrftghasdrguilasdhfiuSEHDRFIOUHWEIOFGiwegdfiuAWEGUIFGAWieufgiUAWEFGIPqugfpei7gP89FTG39P78GF9P3', '123 main', 'Conor', 745518154903530643, 'Invoice'),
 (28, NULL, 433.00, NULL, 'rgszd r drfgb vrfdb f gvbrtdfgbdrfgb zdrfgbdgb rfgv rfv drfsv rfd rfsd rfsgv  awef we', 'qwe', 'qweq', 745518154903530643, 'Invoice'),
 (29, NULL, 433.00, NULL, 'ewfdw', 'qwe', 'qweq', 745518154903530643, 'Invoice'),
@@ -47,7 +91,18 @@ INSERT INTO `invoices` (`InvoiceID`, `JobID`, `Amount`, `InvoiceDate`, `descript
 (38, NULL, 657.00, NULL, 'This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. ', '19 Footbridge Trail', 'Bob', 1535675711267, 'Proposal'),
 (39, NULL, 2567.00, NULL, 'This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. ', '123 main', 'Tom', 1535675711267, 'Invoice'),
 (40, NULL, 657.00, NULL, 'This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. This is a test of a proposal. ', '19 Footbridge Trail', 'Bob', 1535675711267, 'Proposal'),
-(41, NULL, 657.00, NULL, 'gvj', '19 Footbridge Trail', 'Bob', 1535675711267, 'Invoice');
+(41, NULL, 657.00, NULL, 'gvj', '19 Footbridge Trail', 'Bob', 1535675711267, 'Invoice'),
+(42, NULL, 775.00, NULL, 'tester', '19 Footbridge Trail', 'bob', 745518154903530643, 'Invoice'),
+(43, NULL, 775.00, NULL, 'this is a test', '19 Footbridge Trail', 'bob', 745518154903530643, 'Proposal'),
+(44, NULL, 855.00, NULL, 'test', '12 coastal', 'laim', 745518154903530643, 'Invoice'),
+(45, NULL, 50.00, NULL, 'liuhliu', '29', '888', 745518154903530643, 'Invoice'),
+(46, NULL, 60.00, NULL, 'okpo', '19 Footbridge Trail', 'CCCC', 745518154903530643, 'Invoice');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jobs`
+--
 
 CREATE TABLE `jobs` (
   `JobID` int(11) NOT NULL,
@@ -61,18 +116,42 @@ CREATE TABLE `jobs` (
   `DaysWorked` decimal(10,2) DEFAULT NULL,
   `PaymentMethod` enum('Cash','Check','Pending') DEFAULT 'Pending',
   `Status` enum('Active','Pending Payment','Paid') DEFAULT 'Active',
-  `ClientName` varchar(255) DEFAULT NULL,
+  `FirstName` varchar(255) DEFAULT NULL,
   `Revenue` float(10,2) DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL,
   `MaterialCost` decimal(10,2) DEFAULT NULL,
   `Profit` decimal(10,2) DEFAULT NULL,
   `completeDate` date DEFAULT NULL,
-  `startDate` date DEFAULT NULL
+  `startDate` date DEFAULT NULL,
+  `LastName` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `jobs` (`JobID`, `ClientID`, `JobName`, `Address`, `PhoneNumber`, `Distance`, `SQFT`, `LaborCost`, `DaysWorked`, `PaymentMethod`, `Status`, `ClientName`, `Revenue`, `user_id`, `MaterialCost`, `Profit`, `completeDate`, `startDate`) VALUES
-(148, NULL, 'Tower hill', '19 Footbridge Trail', '4434931874', 69.00, 345.00, 423.00, 5.00, 'Check', 'Paid', 'Bob', 3453.00, 1535675711267, 234.00, 2796.00, '2024-03-01', '2024-02-21'),
-(149, NULL, 'Putty Street', '123 main', '4452377326', 33.00, 123.00, 234.00, 3.00, 'Cash', 'Paid', 'Tom', 4245.00, 1535675711267, 2333.00, 1678.00, '2023-12-31', '2023-12-13');
+--
+-- Dumping data for table `jobs`
+--
+
+INSERT INTO `jobs` (`JobID`, `ClientID`, `JobName`, `Address`, `PhoneNumber`, `Distance`, `SQFT`, `LaborCost`, `DaysWorked`, `PaymentMethod`, `Status`, `FirstName`, `Revenue`, `user_id`, `MaterialCost`, `Profit`, `completeDate`, `startDate`, `LastName`) VALUES
+(1, 0, 'test', '28', '19 Footbridge Trail', 69.00, 34.00, 10.00, 5.00, 'Cash', 'Pending Payment', 'WORIK', 345.00, 745518154903530643, 50.00, 285.00, '2024-03-21', '2024-03-04', '4434931874'),
+(148, 0, 'Tower hill', '19 Footbridge Trail', '4434931874', 69.00, 345.00, 423.00, 5.00, 'Check', 'Paid', 'Bob', 3453.00, 1535675711267, 234.00, 2796.00, '2024-03-01', '2024-02-21', NULL),
+(149, 0, 'Putty Street', '123 main', '4452377326', 33.00, 123.00, 234.00, 3.00, 'Cash', 'Paid', 'Tom', 4245.00, 1535675711267, 2333.00, 1678.00, '2023-12-31', '2023-12-13', NULL),
+(150, 0, 'tower', '19 Footbridge Trail', '4434931874', 33.00, 234.00, 333.00, 3.00, 'Check', 'Paid', 'bob', 2222.00, 745518154903530643, 442.00, 1447.00, '2024-03-02', '2024-02-28', NULL),
+(151, 0, 'tower 2', '123 main', '22412414', 5.00, 2345.00, 234.00, 2.00, 'Pending', 'Pending Payment', 'conor', 2521.00, 745518154903530643, 255.00, 2032.00, '2024-02-28', '2024-02-20', NULL),
+(152, 0, 'Pier', '2334 duck road', '865858590', 22.00, 262.00, 422.00, 4.00, 'Cash', 'Paid', 'Ian', 6423.00, 745518154903530643, 1022.00, 4979.00, '2024-01-22', '2024-01-16', NULL),
+(155, 0, 'dog house', 'Finn Street', '69696969', 6.00, 999.00, 99.00, 9.00, 'Check', 'Paid', 'Finn', 6999.00, 745518154903530643, 69.00, 6831.00, '2023-12-31', '2023-12-13', NULL),
+(156, 0, 'building', '123 main', '123124', 12.00, 213.00, 121.00, 12.00, 'Cash', 'Active', 'John ', 12312.00, 745518154903530643, 123.00, 12068.00, '2024-03-02', '2024-02-28', NULL),
+(157, 0, 'tower', '19 Footbridge Trail', '4434931874', 69.00, 34.00, 234.00, 5.00, 'Check', 'Pending Payment', 'pat', 34534.00, 745518154903530643, 234.00, 34066.00, '2024-02-29', '2024-02-27', NULL),
+(158, 0, 'Pond', '232 vermont ave', '49372937', 33.00, 322.00, 221.00, 5.00, 'Check', 'Active', 'Ryan', 9876.00, 745518154903530643, 1331.00, 8324.00, '0000-00-00', '2024-03-02', NULL),
+(159, 0, '4564', '28', '19 Footbridge Trail', 564.00, 4564.00, 456.00, 5.00, 'Check', 'Active', 'Conor Boyle', 45.00, 745518154903530643, 5.00, -416.00, '2024-03-09', '2024-02-27', '4434931874'),
+(160, 0, '34534', '29', 'street ', 34534.00, 53453453.00, 5.00, 3453.00, 'Check', 'Pending Payment', '888', 435.00, 745518154903530643, 45.00, 385.00, '2024-03-02', '2024-02-26', '2225411'),
+(161, 0, 'test', '19 Footbridge Trail', '4434931874', 69.00, 34.00, 10.00, 5.00, 'Cash', 'Pending Payment', '676', 345.00, 745518154903530643, 50.00, 285.00, '2024-02-29', '2024-02-27', 'Boyle'),
+(162, 28, 'test', '19 Footbridge Trail', '4434931874', 69.00, 34.00, 10.00, 5.00, 'Check', 'Pending Payment', 'CCCC', 345.00, 745518154903530643, 50.00, 285.00, '2024-03-02', '2024-02-28', 'Boyle'),
+(163, 28, 'test', '19 Footbridge Trail', '4434931874', 69.00, 34.00, 10.00, 5.00, 'Check', 'Pending Payment', 'CCCC', 345.00, 745518154903530643, 50.00, 285.00, '2024-03-02', '2024-02-28', 'Boyle');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
 
 CREATE TABLE `users` (
   `id` bigint(20) NOT NULL,
@@ -88,39 +167,63 @@ CREATE TABLE `users` (
   `email` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Indexes for dumped tables
+--
 
+--
+-- Indexes for table `clients`
+--
 ALTER TABLE `clients`
   ADD PRIMARY KEY (`ClientID`);
 
+--
+-- Indexes for table `invoices`
+--
 ALTER TABLE `invoices`
   ADD PRIMARY KEY (`InvoiceID`),
   ADD KEY `JobID` (`JobID`);
 
+--
+-- Indexes for table `jobs`
+--
 ALTER TABLE `jobs`
-  ADD PRIMARY KEY (`JobID`),
-  ADD KEY `ClientID` (`ClientID`);
+  ADD PRIMARY KEY (`JobID`);
 
+--
+-- Indexes for table `users`
+--
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `date` (`date`),
-  ADD KEY `user_name` (`user_name`);
+  ADD PRIMARY KEY (`user_id`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `clients`
+--
 ALTER TABLE `clients`
-  MODIFY `ClientID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `ClientID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
+--
+-- AUTO_INCREMENT for table `invoices`
+--
 ALTER TABLE `invoices`
-  MODIFY `InvoiceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `InvoiceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
+--
+-- AUTO_INCREMENT for table `jobs`
+--
 ALTER TABLE `jobs`
-  MODIFY `JobID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
+  MODIFY `JobID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
 
+--
+-- AUTO_INCREMENT for table `users`
+--
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
-ALTER TABLE `invoices`
-  ADD CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`JobID`) REFERENCES `jobs` (`JobID`);
-
-ALTER TABLE `jobs`
-  ADD CONSTRAINT `jobs_ibfk_1` FOREIGN KEY (`ClientID`) REFERENCES `clients` (`ClientID`);
+  MODIFY `user_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=745518154903530644;
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
