@@ -1,8 +1,8 @@
 <?php
 class Database {
-    private $servername = "austinoertel.tech";
-    private $username = "conorboyle";
-    private $password = "bStfa!JiKbC)oW/2";
+    private $servername = "localhost";
+    private $username = "root";
+    private $password = "";
     private $dbname = "cm";
     public $conn;
 
